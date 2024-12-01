@@ -8,7 +8,7 @@ document.querySelectorAll('button').forEach(button => {
 function generateQuestions(selectedType) {
     let questions = [];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 30; i++) {
         let num1, num2, num3; // 重新定義 num3 變數
             switch (selectedType) {
             case 'linearEquation': // 一元一次方程式
@@ -538,7 +538,7 @@ function generateQuestions(selectedType) {
                         answer: formatPower(sameExpResult.base, sameExpResult.exponent)
                     });
                 } else {
-                    // 如果不能表示���指數形式，使用一般數字
+                    // 如果不能表示為指數形式，使用一般數字
                     questions.push({
                         question: `${i + 1}. ${sameExpQuestion} = `,
                         answer: sameExpAnswer

@@ -8,7 +8,7 @@ document.querySelectorAll('button').forEach(button => {
 function generateQuestions(selectedType) {
     let questions = [];
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 15; i++) {
         let num1, num2, num3; // 重新定義 num3 變數
             switch (selectedType) {
             case 'linearEquation': // 一元一次方程式
@@ -538,7 +538,7 @@ function generateQuestions(selectedType) {
                         answer: formatPower(sameExpResult.base, sameExpResult.exponent)
                     });
                 } else {
-                    // 如果不能表示為指數形式，使用一般數字
+                    // 如果不能表示���指數形式，使用一般數字
                     questions.push({
                         question: `${i + 1}. ${sameExpQuestion} = `,
                         answer: sameExpAnswer
@@ -645,7 +645,7 @@ function generateQuestions(selectedType) {
                     });
                 }
                 break;
-            case 'pointDistance': // 兩點間距離��算
+            case 'pointDistance': // 兩點間距離算
                 let point1, point2;
                 do {
                     // 生成兩個-50到50之間的點
@@ -826,8 +826,8 @@ function displayQuestions(questions) {
     questionTab.document.write('<style>');
     questionTab.document.write('body { font-family: Arial, sans-serif; margin: 20px; }');
     questionTab.document.write('h1 { font-size: 20px; }');
-    questionTab.document.write('.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }');
-    questionTab.document.write('.question { font-size: 18px; margin: 20px 0; }');
+    questionTab.document.write('.grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }');
+    questionTab.document.write('.question { font-size: 18px; padding: 10px 0; border-bottom: 1px solid #ddd; }');
     questionTab.document.write(`
         .fraction {
             display: inline-block;
@@ -861,8 +861,8 @@ function displayQuestions(questions) {
     answerTab.document.write('<style>');
     answerTab.document.write('body { font-family: Arial, sans-serif; margin: 20px; }');
     answerTab.document.write('h1 { font-size: 20px; }');
-    answerTab.document.write('.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }');
-    answerTab.document.write('.answer { font-size: 18px; margin: 20px 0; }');
+    answerTab.document.write('.grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }');
+    answerTab.document.write('.answer { font-size: 18px; padding: 10px 0; border-bottom: 1px solid #ddd; }');
     answerTab.document.write(`
         .fraction {
             display: inline-block;

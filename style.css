@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, sans-serif;
+    width: 250px;
+}
+
+h1 {
+    font-size: 18px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 列 */
+    gap: 10px; /* 每個項目之間的間距 */
+}
+
+button {
+    margin-top: 10px;
+    width: 100%; /* 按鈕寬度為 100% */
+}

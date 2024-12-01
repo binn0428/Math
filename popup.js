@@ -128,7 +128,7 @@ function generateQuestions(selectedType) {
                 num1 = Math.floor(Math.random() * 900) + 100; // 生成3位數
                 num2 = Math.floor(Math.random() * 9) + 1; // 生成1位數
                 questions.push({ 
-                    question: `${i + 1}. ${num1} × ${num2} = `, // 修改這裡，將空格改為 ×
+                    question: `${i + 1}. ${num1} × ${num2} = `, // 使用正確的乘號符號
                     answer: num1 * num2 
                 });
                 break;
@@ -432,7 +432,7 @@ function generateQuestions(selectedType) {
                         }
                     }
                     
-                    // 再處理加減
+                    // 再處理���減
                     finalResult = tempNums[0];
                     for(let i = 0; i < tempOps.length; i++) {
                         if(tempOps[i] === '+') finalResult += tempNums[i + 1];
@@ -780,7 +780,7 @@ function generateQuestions(selectedType) {
                         // 類型1：判斷是否為完全平方數
                         questions.push({
                             question: `${i + 1}. ${squareNum} 是完全平方數嗎？`,
-                            answer: "��"
+                            answer: ""
                         });
                     } else if (questionType < 0.66) {
                         // 類型2：求平方根

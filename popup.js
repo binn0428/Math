@@ -432,7 +432,7 @@ function generateQuestions(selectedType) {
                         }
                     }
                     
-                    // 再處理���減
+                    // 再處理加減
                     finalResult = tempNums[0];
                     for(let i = 0; i < tempOps.length; i++) {
                         if(tempOps[i] === '+') finalResult += tempNums[i + 1];
@@ -773,20 +773,20 @@ function generateQuestions(selectedType) {
                     let base = Math.floor(Math.random() * 20) + 1;
                     squareNum = base * base;
                     
-                    // 隨機選擇題目類型
+                    // 隨機擇題目類型
                     let questionType = Math.random();
                     
                     if (questionType < 0.33) {
                         // 類型1：判斷是否為完全平方數
                         questions.push({
                             question: `${i + 1}. ${squareNum} 是完全平方數嗎？`,
-                            answer: ""
+                            answer: "是"
                         });
                     } else if (questionType < 0.66) {
                         // 類型2：求平方根
                         questions.push({
                             question: `${i + 1}. ${squareNum} 的平方根 = `,
-                            answer: base  // 直接使用 base 而不是 Math.sqrt(squareNum)，避免浮點數
+                            answer: base
                         });
                     } else {
                         // 類型3：求平方
@@ -826,68 +826,114 @@ function displayQuestions(questions) {
     // 創建一個新的分頁同時顯示題目和答案
     const newTab = window.open();
     newTab.document.write('<html><head><title>題目和答案</title>');
-    newTab.document.write('<style>');
     newTab.document.write(`
-        body { 
-            font-family: Arial, sans-serif; 
-            margin: 20px; 
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1 { 
-            font-size: 24px; 
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .problem-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .problem-row {
-            display: flex;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .question {
-            flex: 2;
-            font-size: 18px;
-        }
-        .answer {
-            flex: 1;
-            font-size: 18px;
-            text-align: right;
-            color: #45c77b;
-            font-weight: bold;
-        }
-        .fraction {
-            display: inline-block;
-            vertical-align: middle;
-            text-align: center;
-            font-size: 18px;
-        }
-        .fraction > span {
-            display: block;
-            padding: 0.1em;
-        }
-        .fraction span.denominator {
-            border-top: 1px solid black;
-        }
-        @media print {
-            .problem-row {
-                break-inside: avoid;
-                page-break-inside: avoid;
+        <style>
+            body { 
+                font-family: Arial, sans-serif; 
+                margin: 20px; 
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
             }
-        }
+            h1 { 
+                font-size: 24px; 
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .problem-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .problem-row {
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                border-bottom: 1px solid #ddd;
+            }
+            .question {
+                flex: 2;
+                font-size: 18px;
+            }
+            .answer {
+                flex: 1;
+                font-size: 18px;
+                text-align: right;
+                color: #45c77b;
+                font-weight: bold;
+                display: none; /* 預設隱藏答案 */
+            }
+            .show-answers-btn {
+                display: block;
+                margin: 20px auto;
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #45c77b;
+                color: #000000;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+            .show-answers-btn:hover {
+                background-color: #4dd688;
+                transform: translateY(-2px);
+            }
+            .show-answers-btn:active {
+                background-color: #ff5722;
+                color: #ffffff;
+            }
+            /* 分數樣式 */
+            .fraction {
+                display: inline-block;
+                vertical-align: middle;
+                text-align: center;
+                margin: 0 5px;
+            }
+            .fraction > span {
+                display: block;
+                padding: 3px;
+                text-align: center;
+            }
+            .fraction span.numerator {
+                border-bottom: 1px solid black;
+            }
+            .fraction span.denominator {
+                border-top: none;
+            }
+            
+            /* 答案容器樣式 */
+            .answer {
+                flex: 1;
+                font-size: 18px;
+                text-align: right;
+                color: #45c77b;
+                font-weight: bold;
+                display: none;
+            }
+            
+            /* 確保分數在答案容器中正確顯示 */
+            .answer .fraction {
+                display: none;
+            }
+            
+            /* 當答案顯示時的分數樣式 */
+            .answer.show .fraction {
+                display: inline-block;
+            }
+        </style>
     `);
-    newTab.document.write('</style>');
     newTab.document.write('</head><body>');
     newTab.document.write('<h1>題目和答案</h1>');
+    
+    // 添加顯示答案按鈕
+    newTab.document.write('<button class="show-answers-btn" onclick="toggleAnswers()">顯示答案</button>');
+    
     newTab.document.write('<div class="problem-container">');
 
-    // 同時顯示題目和答案
+    // 顯示題目和答案
     questions.forEach((q, index) => {
         newTab.document.write(`
             <div class="problem-row">
@@ -898,6 +944,27 @@ function displayQuestions(questions) {
     });
 
     newTab.document.write('</div>');
+    
+    // 添加切換答案顯示的 JavaScript 函數
+    newTab.document.write(`
+        <script>
+        function toggleAnswers() {
+            const answers = document.querySelectorAll('.answer');
+            const btn = document.querySelector('.show-answers-btn');
+            const isHidden = answers[0].style.display === 'none' || answers[0].style.display === '';
+            
+            answers.forEach(answer => {
+                answer.style.display = isHidden ? 'block' : 'none';
+                answer.classList.toggle('show', isHidden);
+            });
+            
+            btn.textContent = isHidden ? '隱藏答案' : '顯示答案';
+            btn.style.backgroundColor = isHidden ? '#ff5722' : '#45c77b';
+            btn.style.color = isHidden ? '#ffffff' : '#000000';
+        }
+        </script>
+    `);
+    
     newTab.document.write('</body></html>');
     newTab.document.close();
 }

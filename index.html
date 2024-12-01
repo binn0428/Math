@@ -79,10 +79,9 @@
 
         /* 彈出視窗中的題目容器 */
         #problemsContainer {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 改為2列 */
-            gap: 20px 40px; /* 行間距20px，列間距40px */
-            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
             margin: 20px auto;
             padding: 0 20px;
         }
@@ -91,14 +90,14 @@
         .problem-row {
             display: flex;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #ddd;
             min-height: 40px;
         }
 
         /* 題號樣式 */
         .problem-number {
-            width: 30px;
+            width: 40px;
             font-weight: bold;
             color: #333;
         }
@@ -106,8 +105,8 @@
         /* 題目內容樣式 */
         .problem-text {
             flex: 2;
-            padding: 0 10px;
-            min-width: 200px; /* 確保題目有足夠空間 */
+            padding: 0 20px;
+            min-width: 300px; /* 確保題目有更寬的空間 */
         }
 
         /* 答案樣式 */
@@ -116,13 +115,13 @@
             text-align: right;
             color: #45c77b;
             font-weight: bold;
-            padding-right: 10px;
-            min-width: 80px; /* 確保答案有足夠空間 */
+            padding-right: 20px;
+            min-width: 100px; /* 確保答案有足夠空間 */
         }
 
         /* 分隔線樣式 */
         .problem-row:not(:last-child) {
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         /* 打印樣式優化 */

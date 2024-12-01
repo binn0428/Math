@@ -820,15 +820,45 @@ function displayQuestions(questions) {
         return;
     }
 
-    // 創建一個新的分頁顯示題目
-    const questionTab = window.open();
-    questionTab.document.write('<html><head><title>生成的題目</title>');
-    questionTab.document.write('<style>');
-    questionTab.document.write('body { font-family: Arial, sans-serif; margin: 20px; }');
-    questionTab.document.write('h1 { font-size: 20px; }');
-    questionTab.document.write('.grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }');
-    questionTab.document.write('.question { font-size: 18px; padding: 10px 0; border-bottom: 1px solid #ddd; }');
-    questionTab.document.write(`
+    // 創建一個新的分頁同時顯示題目和答案
+    const newTab = window.open();
+    newTab.document.write('<html><head><title>題目和答案</title>');
+    newTab.document.write('<style>');
+    newTab.document.write(`
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 { 
+            font-size: 24px; 
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .problem-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .problem-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .question {
+            flex: 2;
+            font-size: 18px;
+        }
+        .answer {
+            flex: 1;
+            font-size: 18px;
+            text-align: right;
+            color: #45c77b;
+            font-weight: bold;
+        }
         .fraction {
             display: inline-block;
             vertical-align: middle;
@@ -842,54 +872,31 @@ function displayQuestions(questions) {
         .fraction span.denominator {
             border-top: 1px solid black;
         }
-    `);
-    questionTab.document.write('</style>');
-    questionTab.document.write('</head><body>');
-    questionTab.document.write('<div class="grid">');
-
-    questions.forEach(q => {
-        questionTab.document.write(`<div class="question">${q.question}</div>`);
-    });
-
-    questionTab.document.write('</div>');
-    questionTab.document.write('</body></html>');
-    questionTab.document.close(); // 關閉文檔以顯示內容
-
-    // 創建一個新的分頁顯示答案
-    const answerTab = window.open();
-    answerTab.document.write('<html><head><title>答案</title>');
-    answerTab.document.write('<style>');
-    answerTab.document.write('body { font-family: Arial, sans-serif; margin: 20px; }');
-    answerTab.document.write('h1 { font-size: 20px; }');
-    answerTab.document.write('.grid { display: flex; flex-direction: column; gap: 15px; max-width: 800px; margin: 0 auto; }');
-    answerTab.document.write('.answer { font-size: 18px; padding: 10px 0; border-bottom: 1px solid #ddd; }');
-    answerTab.document.write(`
-        .fraction {
-            display: inline-block;
-            vertical-align: middle;
-            text-align: center;
-            font-size: 18px;
-        }
-        .fraction > span {
-            display: block;
-            padding: 0.1em;
-        }
-        .fraction span.denominator {
-            border-top: 1px solid black;
+        @media print {
+            .problem-row {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
         }
     `);
-    answerTab.document.write('</style>');
-    answerTab.document.write('</head><body>');
-    answerTab.document.write('<h1>答案</h1>');
-    answerTab.document.write('<div class="grid">');
+    newTab.document.write('</style>');
+    newTab.document.write('</head><body>');
+    newTab.document.write('<h1>題目和答案</h1>');
+    newTab.document.write('<div class="problem-container">');
 
+    // 同時顯示題目和答案
     questions.forEach((q, index) => {
-        answerTab.document.write(`<div class="answer">${index + 1}. 答案: ${q.answer}</div>`); // 添加題號
+        newTab.document.write(`
+            <div class="problem-row">
+                <div class="question">${q.question}</div>
+                <div class="answer">答案: ${q.answer}</div>
+            </div>
+        `);
     });
 
-    answerTab.document.write('</div>');
-    answerTab.document.write('</body></html>');
-    answerTab.document.close(); // 關閉文檔以顯示內容
+    newTab.document.write('</div>');
+    newTab.document.write('</body></html>');
+    newTab.document.close();
 }
 
 // 在文件末尾添加计算函数

@@ -76,6 +76,59 @@
                 grid-template-columns: repeat(2, 1fr); /* 在小屏幕上改為2列 */
             }
         }
+
+        /* 彈出視窗中的題目容器 */
+        #problemsContainer {
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        /* 單個題目行的樣式 */
+        .problem-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            min-height: 40px;
+        }
+
+        /* 題號樣式 */
+        .problem-number {
+            width: 40px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 題目內容樣式 */
+        .problem-text {
+            flex: 2;
+            padding: 0 20px;
+        }
+
+        /* 答案樣式 */
+        .problem-answer {
+            flex: 1;
+            text-align: right;
+            color: #45c77b;
+            font-weight: bold;
+            padding-right: 20px;
+        }
+
+        /* 分隔線樣式 */
+        .problem-row:not(:last-child) {
+            margin-bottom: 5px;
+        }
+
+        /* 打印樣式優化 */
+        @media print {
+            .problem-row {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
     </style>
 </head>
 <body>

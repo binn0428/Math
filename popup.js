@@ -126,8 +126,11 @@ function generateQuestions(selectedType) {
                 break;
             case 'threeDigitMultiply': //3x1位數乘法
                 num1 = Math.floor(Math.random() * 900) + 100; // 生成3位數
-                num2 = Math.floor(Math.random() * 9) + 1; // 生成3位數
-                questions.push({ question: `${i + 1}. ${num1}   ${num2} = `, answer: num1 * num2 });
+                num2 = Math.floor(Math.random() * 9) + 1; // 生成1位數
+                questions.push({ 
+                    question: `${i + 1}. ${num1} × ${num2} = `, // 修改這裡，將空格改為 ×
+                    answer: num1 * num2 
+                });
                 break;
             case 'nineByNineMultiply': //9x9乘法
                 num1 = Math.floor(Math.random() * 9) + 1; // 生成1到9的數字
@@ -777,7 +780,7 @@ function generateQuestions(selectedType) {
                         // 類型1：判斷是否為完全平方數
                         questions.push({
                             question: `${i + 1}. ${squareNum} 是完全平方數嗎？`,
-                            answer: "是"
+                            answer: "��"
                         });
                     } else if (questionType < 0.66) {
                         // 類型2：求平方根

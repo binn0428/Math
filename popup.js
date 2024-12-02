@@ -680,31 +680,23 @@ function generateQuestions(selectedType) {
                 do {
                     // 生成一個-50到50之間的點
                     givenPoint = Math.floor(Math.random() * 101) - 50;
-                    // 生成1到50的距離（縮小範圍以確保結果在合範圍內）
+                    // 生成1到50的距離
                     distance = Math.floor(Math.random() * 50) + 1;
                     
-                    // 確保結果點在合理範圍內-50到50）
+                    // 確保結果點在合理範圍內(-50到50)
                     if (Math.abs(givenPoint) + distance <= 50) {
-                        // 格式化顯示（負數加括號）
+                        // 格式化顯示（題目中的負數加括號）
                         let formattedPoint = givenPoint < 0 ? `(${givenPoint})` : givenPoint;
                         
                         // 隨機決定是要求左邊的點還是右邊的點
                         let isLeftPoint = Math.random() < 0.5;
                         
-                        // 計算另一個可能的點（左點和右點）
-                        let leftPoint = givenPoint - distance;
-                        let rightPoint = givenPoint + distance;
-                        
-                        // 根據選擇設定答案
-                        let answer = isLeftPoint ? leftPoint : rightPoint;
-                        let explanation = `${formattedPoint} ${isLeftPoint ? '-' : '+'} ${distance} = ${answer}`;
-                        
-                        // 格式化答案（如果是負數，加上括號）
-                        let formattedAnswer = answer < 0 ? `(${answer})` : answer;
+                        // 計算答案點
+                        let answer = isLeftPoint ? givenPoint - distance : givenPoint + distance;
                         
                         questions.push({
                             question: `${i + 1}. 數線上一點 ${formattedPoint}，與另一點的距離為 ${distance}，求在其${isLeftPoint ? '左' : '右'}側的點。`,
-                            answer: `${formattedAnswer} (${explanation})`
+                            answer: answer  // 直接使用答案，不加括號
                         });
                         break;
                     }
@@ -741,7 +733,7 @@ function generateQuestions(selectedType) {
             case 'standardForm': // 標準分解式
                 let number;
                 do {
-                    // ���成2-999的數字
+                    // 成2-999的數字
                     number = Math.floor(Math.random() * 998) + 2;
                     
                     // 檢查是否可以分解為2-9的指數形式

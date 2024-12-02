@@ -6,12 +6,15 @@ const defaultUsers = {
 };
 
 // 初始化用戶數據
-if (!localStorage.getItem('users')) {
-    localStorage.setItem('users', JSON.stringify(defaultUsers));
+function initUsers() {
+    if (!localStorage.getItem('users')) {
+        localStorage.setItem('users', JSON.stringify(defaultUsers));
+    }
 }
 
 // 檢查登入狀態
 function checkLoginStatus() {
+    initUsers(); // 確保用戶數據已初始化
     const currentPage = window.location.pathname.split('/').pop();
     const loginStatus = sessionStorage.getItem('loginStatus');
     
@@ -30,9 +33,9 @@ function checkLoginStatus() {
 
 // 登入函數
 function login() {
+    initUsers(); // 確保用戶數據已初始化
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    const errorMessage = document.getElementById('errorMessage');
     
     // 從 localStorage 獲取最新的用戶數據
     const users = JSON.parse(localStorage.getItem('users'));
@@ -43,7 +46,7 @@ function login() {
         if (users[username].password === password) {
             // 檢查登入人數限制
             if (users[username].activeLogins < 1) {
-                users[username].activeLogins++;
+                users[username].activeLogins = 1; // 直接設為 1
                 localStorage.setItem('users', JSON.stringify(users));
                 sessionStorage.setItem('loginStatus', 'true');
                 sessionStorage.setItem('username', username);
@@ -81,10 +84,10 @@ function logout() {
     window.location.href = 'login.html';
 }
 
-// 在每個頁面載入時檢查登入狀態
+// 在頁面載入時初始化
 window.onload = function() {
+    initUsers();
     checkLoginStatus();
-    // 如果有其他 onload 事件，也要在這裡調用
 };
 
 // 監聽視窗關閉事件

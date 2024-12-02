@@ -1156,7 +1156,7 @@ function displayQuestions(questions) {
                 answer.style.display = isHidden ? 'block' : 'none';
             });
             
-            btn.textContent = isHidden ? '隱藏全部答案' : '顯示全部答案';
+            btn.textContent = isHidden ? '隱藏答案' : '顯示答案';
             btn.style.backgroundColor = isHidden ? '#ff5722' : '#45c77b';
             btn.style.color = isHidden ? '#ffffff' : '#000000';
         }
@@ -1198,7 +1198,7 @@ function displayQuestions(questions) {
                     answer.style.display = 'none';
                 });
                 
-                btn.textContent = '顯示全部答案';
+                btn.textContent = '全部答案';
                 btn.style.backgroundColor = '#45c77b';
                 btn.style.color = '#000000';
             }, 1000);
@@ -1225,7 +1225,7 @@ function displayQuestions(questions) {
             updateCounters();
             
             const btn = document.querySelector('.show-all-btn');
-            btn.textContent = '顯示全部答案';
+            btn.textContent = '全部答案';
             btn.style.backgroundColor = '#45c77b';
             btn.style.color = '#000000';
         }

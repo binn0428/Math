@@ -1,9 +1,14 @@
 // 模擬用戶數據庫
-const users = {
+const defaultUsers = {
     'binn0428': { password: '122232', activeLogins: 0 },
     'vic': { password: '1070320', activeLogins: 0 },
     'yoyo': { password: '1031004', activeLogins: 0 }
 };
+
+// 初始化用戶數據
+if (!localStorage.getItem('users')) {
+    localStorage.setItem('users', JSON.stringify(defaultUsers));
+}
 
 // 檢查登入狀態
 function checkLoginStatus() {
@@ -29,13 +34,17 @@ function login() {
     const password = document.getElementById('password').value;
     const errorMessage = document.getElementById('errorMessage');
     
+    // 從 localStorage 獲取最新的用戶數據
+    const users = JSON.parse(localStorage.getItem('users'));
+    
     // 檢查用戶是否存在
     if (users[username]) {
         // 檢查密碼是否正確
         if (users[username].password === password) {
             // 檢查登入人數限制
-            if (users[username].activeLogins < 1) {
+            if (users[username].activeLogins < 2) {
                 users[username].activeLogins++;
+                localStorage.setItem('users', JSON.stringify(users));
                 sessionStorage.setItem('loginStatus', 'true');
                 sessionStorage.setItem('username', username);
                 window.location.href = 'index.html';
@@ -60,8 +69,12 @@ function showError(message) {
 // 登出函數
 function logout() {
     const username = sessionStorage.getItem('username');
-    if (username && users[username]) {
-        users[username].activeLogins--;
+    if (username) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        if (users[username]) {
+            users[username].activeLogins = Math.max(0, users[username].activeLogins - 1);
+            localStorage.setItem('users', JSON.stringify(users));
+        }
     }
     sessionStorage.removeItem('loginStatus');
     sessionStorage.removeItem('username');
@@ -77,7 +90,11 @@ window.onload = function() {
 // 監聽視窗關閉事件
 window.onbeforeunload = function() {
     const username = sessionStorage.getItem('username');
-    if (username && users[username]) {
-        users[username].activeLogins--;
+    if (username) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        if (users[username]) {
+            users[username].activeLogins = Math.max(0, users[username].activeLogins - 1);
+            localStorage.setItem('users', JSON.stringify(users));
+        }
     }
 }; 

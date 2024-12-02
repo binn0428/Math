@@ -243,7 +243,7 @@ function generateQuestions(selectedType) {
                     answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
-            case 'factorOfSeven': // 7的因數判別
+            case 'factorOfSeven': // 7的因數判��
                 num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 7; // 因數
                 questions.push({

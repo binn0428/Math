@@ -1,8 +1,11 @@
 document.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', function() {
-        // 根據按鈕的ID生成題目
-        generateQuestions(this.id);
-    });
+    // 排除公因倍數判別按鈕
+    if (!button.hasAttribute('onclick')) {
+        button.addEventListener('click', function() {
+            // 根據按鈕的ID生成題目
+            generateQuestions(this.id);
+        });
+    }
 });
 
 function generateQuestions(selectedType) {
@@ -115,7 +118,7 @@ function generateQuestions(selectedType) {
                 questions.push({ question: `${i + 1}. ${num1} - ${num2} = `, answer: num1 - num2 });
                 break;
             case 'twoDigitMultiply': //2x1位數乘法
-                num1 = Math.floor(Math.random() * 90) + 10; // 生成2位數
+                num1 = Math.floor(Math.random() * 90) + 10; // 生成2位
                 num2 = Math.floor(Math.random() * 9) + 1; // 生成1位數
                 questions.push({ question: `${i + 1}. ${num1} × ${num2} = `, answer: num1 * num2 });
                 break;
@@ -213,7 +216,7 @@ function generateQuestions(selectedType) {
                 num1 = Math.floor(Math.random() * 9999999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 11 的倍數嗎？`,
-                    answer: (num1 % 11 === 0) ? "是" : "不是"
+                    answer: (num1 % 11 === 0) ? "是" : "不��"
                 });
                 break;
             case 'factorOfThree': // 3因數判別
@@ -275,7 +278,7 @@ function generateQuestions(selectedType) {
             case 'positiveNegativeAdd': // 正負數加法
                 num1 = Math.floor(Math.random() * 50) - 10; // 生成-10到9的數字
                 num2 = Math.floor(Math.random() * 50) - 10; // 生成-10到9的數字
-                // 將負數加上括號
+                // 將負數加上號
                 questions.push({
                     question: `${i + 1}. ${num1 < 0 ? `(${num1})` : num1} + ${num2 < 0 ? `(${num2})` : num2} =`,
                     answer: num1 + num2
@@ -417,7 +420,7 @@ function generateQuestions(selectedType) {
                     let tempNums = [...nums];
                     let tempOps = [...operators];
                     
-                    // 先處理乘除
+                    // 先處理乘
                     for(let i = 0; i < tempOps.length; i++) {
                         if(tempOps[i] === '×' || tempOps[i] === '÷') {
                             let tempResult;
@@ -476,7 +479,7 @@ function generateQuestions(selectedType) {
                         (sameExpOp === '×' && samePoweredNums[0] * samePoweredNums[1] > 999) ||
                         (sameExpOp === '+' && samePoweredNums[0] + samePoweredNums[1] > 999));
                 
-                // 如果是除法運算，確保能整除且除數不為0
+                // 如果是除運算，確保能整除且除數不為0
                 if(sameExpOp === '÷') {
                     let dividend = samePoweredNums[0];
                     let divisor = samePoweredNums[1];
@@ -617,7 +620,7 @@ function generateQuestions(selectedType) {
                 
                 // 新增一個函數來找到最接近的指數表示
                 function findExponentialForm(number) {
-                    // 遍歷所有可能的底數（2-9）
+                    // 遍歷所有可的底數（2-9）
                     for(let base = 2; base <= 9; base++) {
                         // 遍歷所有可能的指數（1-9）
                         for(let exp = 1; exp <= 9; exp++) {
@@ -738,7 +741,7 @@ function generateQuestions(selectedType) {
             case 'standardForm': // 標準分解式
                 let number;
                 do {
-                    // 生成2-999的數字
+                    // ���成2-999的數字
                     number = Math.floor(Math.random() * 998) + 2;
                     
                     // 檢查是否可以分解為2-9的指數形式
@@ -818,7 +821,7 @@ function lcm(a, b) {
 
 function displayQuestions(questions) {
     if (questions.length === 0) {
-        alert("沒有生成任何題目！");
+        alert("沒有生成任題目！");
         return;
     }
 
@@ -937,24 +940,83 @@ function displayQuestions(questions) {
                     padding: 10px;
                 }
                 
-                .show-all-btn {
-                    display: block;
+                .button-container {
+                    display: flex;
+                    justify-content: center;
+                    gap: 20px;
                     margin: 20px auto;
+                }
+                
+                .show-all-btn, .check-all-btn, .clear-all-btn {
                     padding: 10px 20px;
                     font-size: 16px;
-                    background-color: #45c77b;
-                    color: #000000;
                     border: none;
                     border-radius: 8px;
                     cursor: pointer;
                     font-weight: bold;
                     transition: all 0.3s ease;
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                }
+                
+                .show-all-btn {
+                    background-color: #45c77b;
+                    color: #000000;
+                }
+                
+                .check-all-btn {
+                    background-color: #ff5722;
+                    color: #ffffff;
+                }
+                
+                .clear-all-btn {
+                    background-color: #808080;
+                    color: #ffeb3b;
+                }
+                
+                .show-all-btn:hover, .check-all-btn:hover, .clear-all-btn:hover {
+                    transform: translateY(-2px);
+                }
+                
+                .show-all-btn:active, .check-all-btn:active, .clear-all-btn:active {
+                    transform: translateY(1px);
+                    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+                }
+                
+                .counter-container {
+                    display: flex;
+                    justify-content: space-between;
+                    margin: 20px auto;
+                    max-width: 400px;
+                    padding: 10px;
+                }
+                
+                .counter {
+                    font-size: 18px;
+                    font-weight: bold;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                }
+                
+                .wrong-counter {
+                    color: #f44336;
+                }
+                
+                .correct-counter {
+                    color: #4CAF50;
                 }
             </style>
         </head>
         <body>
             <h1>題目和答案</h1>
-            <button class="show-all-btn" onclick="toggleAllAnswers()">顯示全部答案</button>
+            <div class="counter-container">
+                <div class="counter wrong-counter">答錯：<span id="wrong-count">0</span></div>
+                <div class="counter correct-counter">答對：<span id="correct-count">0</span></div>
+            </div>
+            <div class="button-container">
+                <button class="show-all-btn" onclick="toggleAllAnswers()">顯示全部答案</button>
+                <button class="check-all-btn" onclick="checkAllAnswers()">全部檢查及恢復</button>
+                <button class="clear-all-btn" onclick="clearAllAnswers()">全部清除</button>
+            </div>
             <div class="problem-container">
     `);
 
@@ -980,6 +1042,14 @@ function displayQuestions(questions) {
         <script>
         const correctAnswers = ${JSON.stringify(questions.map(q => q.answer))};
         
+        let correctCount = 0;
+        let wrongCount = 0;
+
+        function updateCounters() {
+            document.getElementById('correct-count').textContent = correctCount;
+            document.getElementById('wrong-count').textContent = wrongCount;
+        }
+
         function verifyAnswer(index) {
             const input = document.getElementById('input-' + index);
             const checkMark = document.getElementById('check-' + index);
@@ -993,8 +1063,11 @@ function displayQuestions(questions) {
             checkMark.style.visibility = 'hidden';
             xMark.style.visibility = 'hidden';
             
-            // 如果輸入為空，直接返回
+            // 如果輸入為空，清除所有標記和樣式
             if (!userAnswer) {
+                input.classList.remove('wrong-answer', 'correct-answer');
+                checkMark.style.visibility = 'hidden';
+                xMark.style.visibility = 'hidden';
                 answer.style.display = 'none';
                 return;
             }
@@ -1054,6 +1127,24 @@ function displayQuestions(questions) {
             checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
             xMark.style.visibility = isCorrect ? 'hidden' : 'visible';
             input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
+            
+            if (isCorrect) {
+                if (!input.classList.contains('correct-answer')) {
+                    correctCount++;
+                    if (input.classList.contains('wrong-answer')) {
+                        wrongCount--;
+                    }
+                }
+            } else {
+                if (!input.classList.contains('wrong-answer')) {
+                    wrongCount++;
+                    if (input.classList.contains('correct-answer')) {
+                        correctCount--;
+                    }
+                }
+            }
+            
+            updateCounters();
         }
 
         function toggleAllAnswers() {
@@ -1068,6 +1159,75 @@ function displayQuestions(questions) {
             btn.textContent = isHidden ? '隱藏全部答案' : '顯示全部答案';
             btn.style.backgroundColor = isHidden ? '#ff5722' : '#45c77b';
             btn.style.color = isHidden ? '#ffffff' : '#000000';
+        }
+
+        function checkAllAnswers() {
+            correctCount = 0;
+            wrongCount = 0;
+            
+            const inputs = document.querySelectorAll('.answer-input');
+            const answers = document.querySelectorAll('.answer');
+            const checkMarks = document.querySelectorAll('.check-mark');
+            const xMarks = document.querySelectorAll('.x-mark');
+            const btn = document.querySelector('.show-all-btn');
+            
+            // 檢查所有有輸入的答案
+            inputs.forEach((input, index) => {
+                if (input.value.trim()) {
+                    // 先顯示答案以便比對
+                    answers[index].style.display = 'block';
+                    
+                    // 執行答案檢查
+                    verifyAnswer(index);
+                    
+                    // 統計答對答錯數
+                    if (checkMarks[index].style.visibility === 'visible') {
+                        correctCount++;
+                    } else if (xMarks[index].style.visibility === 'visible') {
+                        wrongCount++;
+                    }
+                }
+            });
+            
+            // 更新計數器顯示
+            updateCounters();
+            
+            // 延遲一秒後隱藏答案
+            setTimeout(() => {
+                answers.forEach(answer => {
+                    answer.style.display = 'none';
+                });
+                
+                btn.textContent = '顯示全部答案';
+                btn.style.backgroundColor = '#45c77b';
+                btn.style.color = '#000000';
+            }, 1000);
+        }
+
+        function clearAllAnswers() {
+            const inputs = document.querySelectorAll('.answer-input');
+            const checkMarks = document.querySelectorAll('.check-mark');
+            const xMarks = document.querySelectorAll('.x-mark');
+            const answers = document.querySelectorAll('.answer');
+            
+            inputs.forEach(input => {
+                input.value = '';
+                input.classList.remove('wrong-answer', 'correct-answer');
+            });
+            
+            checkMarks.forEach(mark => mark.style.visibility = 'hidden');
+            xMarks.forEach(mark => mark.style.visibility = 'hidden');
+            answers.forEach(answer => answer.style.display = 'none');
+            
+            // 重置計數器
+            correctCount = 0;
+            wrongCount = 0;
+            updateCounters();
+            
+            const btn = document.querySelector('.show-all-btn');
+            btn.textContent = '顯示全部答案';
+            btn.style.backgroundColor = '#45c77b';
+            btn.style.color = '#000000';
         }
         </script>
     `);

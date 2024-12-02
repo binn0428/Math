@@ -680,7 +680,7 @@ function generateQuestions(selectedType) {
                     // 生成1到50的距離（縮小範圍以確保結果在合理範圍內）
                     distance = Math.floor(Math.random() * 50) + 1;
                     
-                    // 確保結果點在合理範圍內（-50到50）
+                    // 確保結果點在合理範圍內��-50到50）
                     if (Math.abs(givenPoint) + distance <= 50) {
                         // 格式化顯示（負數加括號）
                         let formattedPoint = givenPoint < 0 ? `(${givenPoint})` : givenPoint;
@@ -817,13 +817,11 @@ function lcm(a, b) {
 }
 
 function displayQuestions(questions) {
-    // 確保questions陣列不為空
     if (questions.length === 0) {
         alert("沒有生成任何題目！");
         return;
     }
 
-    // 創建一個新的分頁同時顯示題目和答案
     const newTab = window.open();
     newTab.document.write('<html><head><title>題目和答案</title>');
     newTab.document.write(`
@@ -850,10 +848,16 @@ function displayQuestions(questions) {
                 align-items: center;
                 padding: 10px 0;
                 border-bottom: 1px solid #ddd;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            .problem-row:hover {
+                background-color: #f5f5f5;
             }
             .question {
                 flex: 2;
                 font-size: 18px;
+                padding: 10px;
             }
             .answer {
                 flex: 1;
@@ -861,9 +865,10 @@ function displayQuestions(questions) {
                 text-align: right;
                 color: #45c77b;
                 font-weight: bold;
-                display: none; /* 預設隱藏答案 */
+                display: none;
+                padding: 10px;
             }
-            .show-answers-btn {
+            .show-all-btn {
                 display: block;
                 margin: 20px auto;
                 padding: 10px 20px;
@@ -877,11 +882,11 @@ function displayQuestions(questions) {
                 transition: all 0.3s ease;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             }
-            .show-answers-btn:hover {
+            .show-all-btn:hover {
                 background-color: #4dd688;
                 transform: translateY(-2px);
             }
-            .show-answers-btn:active {
+            .show-all-btn:active {
                 background-color: #ff5722;
                 color: #ffffff;
             }
@@ -903,62 +908,47 @@ function displayQuestions(questions) {
             .fraction span.denominator {
                 border-top: none;
             }
-            
-            /* 答案容器樣式 */
-            .answer {
-                flex: 1;
-                font-size: 18px;
-                text-align: right;
-                color: #45c77b;
-                font-weight: bold;
-                display: none;
-            }
-            
-            /* 確保分數在答案容器中正確顯示 */
-            .answer .fraction {
-                display: none;
-            }
-            
-            /* 當答案顯示時的分數樣式 */
-            .answer.show .fraction {
-                display: inline-block;
-            }
         </style>
     `);
     newTab.document.write('</head><body>');
     newTab.document.write('<h1>題目和答案</h1>');
     
-    // 添加顯示答案按鈕
-    newTab.document.write('<button class="show-answers-btn" onclick="toggleAnswers()">顯示答案</button>');
+    // 添加顯示全部答案按鈕
+    newTab.document.write('<button class="show-all-btn" onclick="toggleAllAnswers()">顯示全部答案</button>');
     
     newTab.document.write('<div class="problem-container">');
 
     // 顯示題目和答案
     questions.forEach((q, index) => {
         newTab.document.write(`
-            <div class="problem-row">
+            <div class="problem-row" onclick="toggleAnswer(${index})">
                 <div class="question">${q.question}</div>
-                <div class="answer">答案: ${q.answer}</div>
+                <div class="answer" id="answer-${index}">答案: ${q.answer}</div>
             </div>
         `);
     });
 
     newTab.document.write('</div>');
     
-    // 添加切換答案顯示的 JavaScript 函數
+    // 添加 JavaScript 函數
     newTab.document.write(`
         <script>
-        function toggleAnswers() {
+        function toggleAnswer(index) {
+            const answer = document.getElementById('answer-' + index);
+            const isHidden = answer.style.display === 'none' || answer.style.display === '';
+            answer.style.display = isHidden ? 'block' : 'none';
+        }
+
+        function toggleAllAnswers() {
             const answers = document.querySelectorAll('.answer');
-            const btn = document.querySelector('.show-answers-btn');
+            const btn = document.querySelector('.show-all-btn');
             const isHidden = answers[0].style.display === 'none' || answers[0].style.display === '';
             
             answers.forEach(answer => {
                 answer.style.display = isHidden ? 'block' : 'none';
-                answer.classList.toggle('show', isHidden);
             });
             
-            btn.textContent = isHidden ? '隱藏答案' : '顯示答案';
+            btn.textContent = isHidden ? '隱藏全部答案' : '顯示全部答案';
             btn.style.backgroundColor = isHidden ? '#ff5722' : '#45c77b';
             btn.style.color = isHidden ? '#ffffff' : '#000000';
         }

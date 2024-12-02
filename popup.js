@@ -677,7 +677,7 @@ function generateQuestions(selectedType) {
                 do {
                     // 生成一個-50到50之間的點
                     givenPoint = Math.floor(Math.random() * 101) - 50;
-                    // 生成1到50的距離（縮小範圍以確保結果在合���範圍內）
+                    // 生成1到50的距離（縮小範圍以確保結果在合範圍內）
                     distance = Math.floor(Math.random() * 50) + 1;
                     
                     // 確保結果點在合理範圍內-50到50）
@@ -928,6 +928,55 @@ function displayQuestions(questions) {
             .show-all-btn:active {
                 background-color: #ff5722;
                 color: #ffffff;
+            }
+            
+            /* 答案樣式 */
+            .answer {
+                flex: 1;
+                font-size: 18px;
+                text-align: right;
+                color: #45c77b;
+                font-weight: bold;
+                display: none;  /* 預設隱藏答案 */
+                padding: 10px;
+            }
+            
+            /* 分數樣式 */
+            .fraction {
+                display: inline-block;
+                vertical-align: middle;
+                text-align: center;
+                margin: 0 5px;
+            }
+            
+            .fraction > span {
+                display: block;
+                padding: 3px;
+                text-align: center;
+            }
+            
+            .fraction span.numerator {
+                border-bottom: 1px solid black;
+            }
+            
+            .fraction span.denominator {
+                border-top: none;
+            }
+            
+            /* 顯示全部答案按鈕樣式 */
+            .show-all-btn {
+                display: block;
+                margin: 20px auto;
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #45c77b;
+                color: #000000;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             }
         </style>
     `);

@@ -379,7 +379,7 @@ function generateQuestions(selectedType) {
                         let divisor;
                         do {
                             divisor = Math.floor(Math.random() * 100) - 50; // 生成-50到49的數字
-                        } while (divisor === 0 || num16 % divisor !== 0); // 確保除數不為0且答案可以整除
+                        } while (divisor === 0 || num16 % divisor !== 0); // 確���除數不為0且答案可以整除
                         const formattedDivisor = divisor < 0 ? `(${divisor})` : divisor; // 格式化除數
                         MultiplyDividequestion = `${formattedNum1} ÷ ${formattedDivisor}`;
                         MultiplyDivideanswer = num16 / divisor; // 保留整數
@@ -680,7 +680,7 @@ function generateQuestions(selectedType) {
                     // 生成1到50的距離（縮小範圍以確保結果在合理範圍內）
                     distance = Math.floor(Math.random() * 50) + 1;
                     
-                    // 確保結果點在合理範圍內��-50到50）
+                    // 確保結果點在合理範圍內-50到50）
                     if (Math.abs(givenPoint) + distance <= 50) {
                         // 格式化顯示（負數加括號）
                         let formattedPoint = givenPoint < 0 ? `(${givenPoint})` : givenPoint;
@@ -848,81 +848,70 @@ function displayQuestions(questions) {
                 align-items: center;
                 padding: 10px 0;
                 border-bottom: 1px solid #ddd;
-                cursor: pointer;
-                transition: background-color 0.3s;
+                gap: 10px;
             }
-            .problem-row:hover {
-                background-color: #f5f5f5;
+            
+            .input-section {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-left: auto;
             }
-            .question {
-                flex: 2;
-                font-size: 18px;
-                padding: 10px;
-            }
-            .answer {
-                flex: 1;
-                font-size: 18px;
-                text-align: right;
-                color: #45c77b;
-                font-weight: bold;
-                display: none;
-                padding: 10px;
-            }
-            .show-all-btn {
-                display: block;
-                margin: 20px auto;
-                padding: 10px 20px;
+            
+            .answer-input {
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
                 font-size: 16px;
+                width: 100px;
+            }
+            
+            .check-mark {
+                color: #4CAF50;
+                font-size: 20px;
+                visibility: hidden;
+            }
+            
+            .wrong-answer {
+                color: #f44336;
+            }
+            
+            .correct-answer {
+                color: #4CAF50;
+            }
+            
+            .verify-btn {
+                padding: 5px 10px;
                 background-color: #45c77b;
-                color: #000000;
+                color: white;
                 border: none;
-                border-radius: 8px;
+                border-radius: 4px;
                 cursor: pointer;
-                font-weight: bold;
-                transition: all 0.3s ease;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                font-size: 14px;
             }
-            .show-all-btn:hover {
-                background-color: #4dd688;
-                transform: translateY(-2px);
-            }
-            .show-all-btn:active {
-                background-color: #ff5722;
-                color: #ffffff;
-            }
-            /* 分數樣式 */
-            .fraction {
-                display: inline-block;
-                vertical-align: middle;
-                text-align: center;
-                margin: 0 5px;
-            }
-            .fraction > span {
-                display: block;
-                padding: 3px;
-                text-align: center;
-            }
-            .fraction span.numerator {
-                border-bottom: 1px solid black;
-            }
-            .fraction span.denominator {
-                border-top: none;
+            
+            .verify-btn:hover {
+                background-color: #3db36e;
             }
         </style>
     `);
     newTab.document.write('</head><body>');
     newTab.document.write('<h1>題目和答案</h1>');
     
-    // 添加顯示全部答案按鈕
     newTab.document.write('<button class="show-all-btn" onclick="toggleAllAnswers()">顯示全部答案</button>');
     
     newTab.document.write('<div class="problem-container">');
 
-    // 顯示題目和答案
     questions.forEach((q, index) => {
         newTab.document.write(`
-            <div class="problem-row" onclick="toggleAnswer(${index})">
+            <div class="problem-row">
                 <div class="question">${q.question}</div>
+                <div class="input-section">
+                    <span class="check-mark" id="check-${index}">✓</span>
+                    <input type="text" class="answer-input" id="input-${index}" 
+                           onkeypress="if(event.key === 'Enter') verifyAnswer(${index})">
+                    <button class="verify-btn" onclick="verifyAnswer(${index})">檢查</button>
+                </div>
                 <div class="answer" id="answer-${index}">答案: ${q.answer}</div>
             </div>
         `);
@@ -930,9 +919,31 @@ function displayQuestions(questions) {
 
     newTab.document.write('</div>');
     
-    // 添加 JavaScript 函數
     newTab.document.write(`
         <script>
+        const correctAnswers = ${JSON.stringify(questions.map(q => q.answer))};
+        
+        function verifyAnswer(index) {
+            const input = document.getElementById('input-' + index);
+            const checkMark = document.getElementById('check-' + index);
+            const userAnswer = input.value.trim();
+            const correctAnswer = correctAnswers[index];
+            
+            // 移除之前的樣式
+            input.classList.remove('wrong-answer', 'correct-answer');
+            
+            // 比對答案（忽略空格和大小寫）
+            const isCorrect = userAnswer.toLowerCase() === String(correctAnswer).toLowerCase();
+            
+            if (isCorrect) {
+                input.classList.add('correct-answer');
+                checkMark.style.visibility = 'visible';
+            } else {
+                input.classList.add('wrong-answer');
+                checkMark.style.visibility = 'hidden';
+            }
+        }
+
         function toggleAnswer(index) {
             const answer = document.getElementById('answer-' + index);
             const isHidden = answer.style.display === 'none' || answer.style.display === '';

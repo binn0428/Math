@@ -1268,7 +1268,12 @@ function calculateWithPriority(nums, operators) {
 
 // 在文件末尾添加辅助函数
 function formatPower(base, exponent) {
-    // 將數字轉換為上標形
+    // 如果指數為1，直接返回底數
+    if (exponent === 1) {
+        return base.toString();
+    }
+    
+    // 將數字轉換為上標形式
     const superscripts = {
         '1': '¹',
         '2': '²',
@@ -1286,8 +1291,16 @@ function formatPower(base, exponent) {
 // 修改 simplifyFraction 函數
 function simplifyFraction(fraction) {
     const [numerator, denominator] = fraction.split('/').map(Number);
-    const gcdValue = gcd(numerator, denominator);
-    return formatFraction(numerator / gcdValue, denominator / gcdValue);
+    const gcdValue = gcd(Math.abs(numerator), Math.abs(denominator));
+    const simplifiedNumerator = numerator / gcdValue;
+    const simplifiedDenominator = denominator / gcdValue;
+    
+    // 如果分母為1，直接返回分子
+    if (simplifiedDenominator === 1) {
+        return simplifiedNumerator.toString();
+    }
+    
+    return formatFraction(simplifiedNumerator, simplifiedDenominator);
 }
 
 // 添加格式化分數的函數

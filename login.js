@@ -72,7 +72,7 @@ function logout() {
     if (username) {
         const users = JSON.parse(localStorage.getItem('users'));
         if (users[username]) {
-            users[username].activeLogins = Math.max(0, users[username].activeLogins - 1);
+            users[username].activeLogins = 0;
             localStorage.setItem('users', JSON.stringify(users));
         }
     }
@@ -93,7 +93,7 @@ window.onbeforeunload = function() {
     if (username) {
         const users = JSON.parse(localStorage.getItem('users'));
         if (users[username]) {
-            users[username].activeLogins = Math.max(0, users[username].activeLogins - 1);
+            users[username].activeLogins = 0;
             localStorage.setItem('users', JSON.stringify(users));
         }
     }

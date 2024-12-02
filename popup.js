@@ -188,35 +188,35 @@ function generateQuestions(selectedType) {
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 3 的倍數嗎？`,
-                    answer: (num1 % 3 === 0) ? "n" : "y"
+                    answer: (num1 % 3 === 0) ? "是" : "不是"
                 });
                 break;
             case 'multipleOfFour': // 4的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 4 的倍數嗎？`,
-                    answer: (num1 % 4 === 0) ? "n" : "y"
+                    answer: (num1 % 4 === 0) ? "是" : "不是"
                 });
                 break;
             case 'multipleOfSix': // 6的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 6 的倍數嗎？`,
-                    answer: (num1 % 6 === 0) ? "n" : "y"
+                    answer: (num1 % 6 === 0) ? "是" : "不是"
                 });
                 break;
             case 'multipleOfNine': // 9的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 9 的倍數嗎？`,
-                    answer: (num1 % 9 === 0) ? "n" : "y"
+                    answer: (num1 % 9 === 0) ? "是" : "不是"
                 });
                 break;
             case 'multipleOfEleven': // 11的倍數判別
                 num1 = Math.floor(Math.random() * 9999999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 11 的倍數嗎？`,
-                    answer: (num1 % 11 === 0) ? "n" : "y"
+                    answer: (num1 % 11 === 0) ? "是" : "不��"
                 });
                 break;
             case 'factorOfThree': // 3因數判別
@@ -224,7 +224,7 @@ function generateQuestions(selectedType) {
                 num1 = 3; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "y" : "n"
+                    answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
             case 'factorOfFour': // 4的因數判別
@@ -232,7 +232,7 @@ function generateQuestions(selectedType) {
                 num1 = 4; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "y" : "n"
+                    answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
             case 'factorOfSix': // 6的因數判別
@@ -240,7 +240,7 @@ function generateQuestions(selectedType) {
                 num1 = 6; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "y" : "n"
+                    answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
             case 'factorOfSeven': // 7的因數判別
@@ -248,31 +248,31 @@ function generateQuestions(selectedType) {
                 num1 = 7; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "y" : "n"
+                    answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
             case 'factorOfEight': // 8的因數判別
-                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
+                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 8; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "y" : "n"
+                    answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
             case 'factorOfNine': // 9的因數判別
-                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
+                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 9; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "y" : "n"
+                    answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
             case 'factorOfEleven': // 11的因數判別
-                num2 = Math.floor(Math.random() * (9999999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
+                num2 = Math.floor(Math.random() * (9999999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 11; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "y" : "n"
+                    answer: (num2 % num1 === 0) ? "是" : "不是"
                 });
                 break;
             case 'positiveNegativeAdd': // 正負數加法
@@ -532,7 +532,7 @@ function generateQuestions(selectedType) {
                             }
                         }
                     }
-                    return null; // 如果找不到完���相等的指數形式，返回null
+                    return null; // 如果找不到完全相等的指數形式，返回null
                 }
                 
                 // 修改答案格式
@@ -741,7 +741,7 @@ function generateQuestions(selectedType) {
             case 'standardForm': // 標準分解式
                 let number;
                 do {
-                    // 成2-999的數字
+                    // ���成2-999的數字
                     number = Math.floor(Math.random() * 998) + 2;
                     
                     // 檢查是否可以分解為2-9的指數形式
@@ -820,12 +820,6 @@ function lcm(a, b) {
 }
 
 function displayQuestions(questions) {
-    const loginStatus = sessionStorage.getItem('loginStatus');
-    if (loginStatus !== 'true') {
-        window.location.href = 'login.html';
-        return;
-    }
-    
     if (questions.length === 0) {
         alert("沒有生成任題目！");
         return;

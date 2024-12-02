@@ -6,7 +6,8 @@ const CHECK_INTERVAL = 1000; // 每秒檢查一次
 const defaultUsers = {
     'binn0428': { password: '122232', activeLogins: 0 },
     'vic': { password: '1070320', activeLogins: 0 },
-    'yoyo': { password: '1031004', activeLogins: 0 }
+    'yoyo': { password: '1031004', activeLogins: 0 },
+    'newuser': { password: 'newpass', activeLogins: 0 }
 };
 
 // 初始化用戶數據

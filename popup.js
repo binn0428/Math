@@ -783,7 +783,7 @@ function generateQuestions(selectedType) {
                         // 類型1：判斷是否為完全平方數
                         questions.push({
                             question: `${i + 1}. ${squareNum} 是完全平方數嗎？`,
-                            answer: "是"
+                            answer: "y"
                         });
                     } else if (questionType < 0.66) {
                         // 類型2求平方根

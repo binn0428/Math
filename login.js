@@ -1,6 +1,6 @@
 // 模擬用戶數據庫
 const users = {
-    'teacher1': { password: 'pass123', activeLogins: 0 },
+    'binn0428': { password: '122232', activeLogins: 0 },
     'teacher2': { password: 'pass456', activeLogins: 0 }
 };
 

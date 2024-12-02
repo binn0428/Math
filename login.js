@@ -4,7 +4,7 @@ const CHECK_INTERVAL = 5000; // 每5秒檢查一次
 
 // 模擬用戶數據庫
 const defaultUsers = {
-    'binn0428': { password: 'pass0428', activeLogins: 0 },
+    'binn0428': { password: 'pass0428', activeLogins: 1 },
     'vic': { password: '1070320', activeLogins: 0 },
     'yoyo': { password: '1031004', activeLogins: 0 },
     'newuser': { password: 'newpass', activeLogins: 0 }

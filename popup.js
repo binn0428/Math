@@ -379,7 +379,7 @@ function generateQuestions(selectedType) {
                         let divisor;
                         do {
                             divisor = Math.floor(Math.random() * 100) - 50; // 生成-50到49的數字
-                        } while (divisor === 0 || num16 % divisor !== 0); // 確���除數不為0且答案可以整除
+                        } while (divisor === 0 || num16 % divisor !== 0); // 確除數不為0且答案可以整除
                         const formattedDivisor = divisor < 0 ? `(${divisor})` : divisor; // 格式化除數
                         MultiplyDividequestion = `${formattedNum1} ÷ ${formattedDivisor}`;
                         MultiplyDivideanswer = num16 / divisor; // 保留整數
@@ -677,7 +677,7 @@ function generateQuestions(selectedType) {
                 do {
                     // 生成一個-50到50之間的點
                     givenPoint = Math.floor(Math.random() * 101) - 50;
-                    // 生成1到50的距離（縮小範圍以確保結果在合理範圍內）
+                    // 生成1到50的距離（縮小範圍以確保結果在合���範圍內）
                     distance = Math.floor(Math.random() * 50) + 1;
                     
                     // 確保結果點在合理範圍內-50到50）
@@ -849,6 +849,12 @@ function displayQuestions(questions) {
                 padding: 10px 0;
                 border-bottom: 1px solid #ddd;
                 gap: 10px;
+                cursor: pointer;
+                transition: background-color 0.3s;
+            }
+            
+            .problem-row:hover {
+                background-color: #f5f5f5;
             }
             
             .input-section {
@@ -891,7 +897,37 @@ function displayQuestions(questions) {
             }
             
             .verify-btn:hover {
-                background-color: #3db36e;
+                background-color: #4dd688;
+            }
+            
+            .verify-btn:active {
+                background-color: #ff5722;
+                color: #ffffff;
+            }
+            
+            .show-all-btn {
+                display: block;
+                margin: 20px auto;
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: #45c77b;
+                color: #000000;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: all 0.3s ease;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+            
+            .show-all-btn:hover {
+                background-color: #4dd688;
+                transform: translateY(-2px);
+            }
+            
+            .show-all-btn:active {
+                background-color: #ff5722;
+                color: #ffffff;
             }
         </style>
     `);
@@ -904,13 +940,14 @@ function displayQuestions(questions) {
 
     questions.forEach((q, index) => {
         newTab.document.write(`
-            <div class="problem-row">
+            <div class="problem-row" onclick="toggleAnswer(${index})">
                 <div class="question">${q.question}</div>
                 <div class="input-section">
                     <span class="check-mark" id="check-${index}">✓</span>
                     <input type="text" class="answer-input" id="input-${index}" 
-                           onkeypress="if(event.key === 'Enter') verifyAnswer(${index})">
-                    <button class="verify-btn" onclick="verifyAnswer(${index})">檢查</button>
+                           onkeypress="if(event.key === 'Enter') verifyAnswer(${index})"
+                           onclick="event.stopPropagation()">
+                    <button class="verify-btn" onclick="event.stopPropagation(); verifyAnswer(${index})">檢查</button>
                 </div>
                 <div class="answer" id="answer-${index}">答案: ${q.answer}</div>
             </div>

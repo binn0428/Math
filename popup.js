@@ -1013,7 +1013,7 @@ function displayQuestions(questions) {
                 <div class="counter correct-counter">答對：<span id="correct-count">0</span></div>
             </div>
             <div class="button-container">
-                <button class="show-all-btn" onclick="toggleAllAnswers()">全部答案</button>
+                <button class="show-all-btn" onclick="toggleAllAnswers()">顯示答案</button>
                 <button class="check-all-btn" onclick="checkAllAnswers()">全部檢查</button>
                 <button class="clear-all-btn" onclick="clearAllAnswers()">全部清除</button>
             </div>
@@ -1198,7 +1198,7 @@ function displayQuestions(questions) {
                     answer.style.display = 'none';
                 });
                 
-                btn.textContent = '全部答案';
+                btn.textContent = '顯示答案';
                 btn.style.backgroundColor = '#45c77b';
                 btn.style.color = '#000000';
             }, 1000);
@@ -1225,7 +1225,7 @@ function displayQuestions(questions) {
             updateCounters();
             
             const btn = document.querySelector('.show-all-btn');
-            btn.textContent = '全部答案';
+            btn.textContent = '顯示答案';
             btn.style.backgroundColor = '#45c77b';
             btn.style.color = '#000000';
         }

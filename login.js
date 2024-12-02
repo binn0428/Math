@@ -1,6 +1,6 @@
 // 添加在文件開頭
 let lastLoginCheck = 0;
-const CHECK_INTERVAL = 5000; // 每5秒檢查一次
+const CHECK_INTERVAL = 1000; // 每5秒檢查一次
 
 // 模擬用戶數據庫
 const defaultUsers = {

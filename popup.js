@@ -216,7 +216,7 @@ function generateQuestions(selectedType) {
                     answer: (num1 % 11 === 0) ? "是" : "不是"
                 });
                 break;
-            case 'factorOfThree': // 3的因數判別
+            case 'factorOfThree': // 3因數判別
                 num2 = Math.floor(Math.random() * (9999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 3; // 因數
                 questions.push({
@@ -471,7 +471,7 @@ function generateQuestions(selectedType) {
                         case '÷': sameResult = samePoweredNums[0] / samePoweredNums[1]; break;
                     }
                     
-                    // 如果結果超過999或任何一個數超過999，重新生成
+                    // 如果結果超過999或任何一個數超過999，重生成
                 } while (samePoweredNums[0] > 999 || samePoweredNums[1] > 999 || 
                         (sameExpOp === '×' && samePoweredNums[0] * samePoweredNums[1] > 999) ||
                         (sameExpOp === '+' && samePoweredNums[0] + samePoweredNums[1] > 999));
@@ -574,7 +574,7 @@ function generateQuestions(selectedType) {
                         (expOperator === '×' && poweredNums[0] * poweredNums[1] > 999) ||
                         (expOperator === '+' && poweredNums[0] + poweredNums[1] > 999));
                 
-                // 如果是除法運算，確保能整除且除數不為0
+                // 如果是除運算，確保能整除除數不為0
                 if(expOperator === '÷') {
                     let dividend = poweredNums[0];
                     let divisor = poweredNums[1];
@@ -615,7 +615,7 @@ function generateQuestions(selectedType) {
                         break;
                 }
                 
-                // 新增一個函數來找到最接近的指數表示
+                // 新增一個函��來找到最接近的指數表示
                 function findExponentialForm(number) {
                     // 遍歷所有可能的底數（2-9）
                     for(let base = 2; base <= 9; base++) {
@@ -658,7 +658,7 @@ function generateQuestions(selectedType) {
                     // 計算距離（差的絕對值）
                     let distance = Math.abs(point2 - point1);
                     
-                    // 確保距離不為0且不超過100
+                    // 確保距離不為0不超過100
                     if (distance > 0 && distance <= 100) {
                         // 格式化顯示（負數加括號）
                         let formattedPoint1 = point1 < 0 ? `(${point1})` : point1;
@@ -783,7 +783,7 @@ function generateQuestions(selectedType) {
                             answer: "是"
                         });
                     } else if (questionType < 0.66) {
-                        // 類型2：求平方根
+                        // 類型2求平方根
                         questions.push({
                             question: `${i + 1}. ${squareNum} 的平方根 = `,
                             answer: base
@@ -823,188 +823,152 @@ function displayQuestions(questions) {
     }
 
     const newTab = window.open();
-    newTab.document.write('<html><head><title>題目和答案</title>');
     newTab.document.write(`
-        <style>
-            body { 
-                font-family: Arial, sans-serif; 
-                margin: 20px; 
-                max-width: 1000px;
-                margin: 0 auto;
-                padding: 20px;
-            }
-            h1 { 
-                font-size: 24px; 
-                text-align: center;
-                margin-bottom: 20px;
-            }
-            .problem-container {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            .problem-row {
-                display: flex;
-                align-items: center;
-                padding: 10px 0;
-                border-bottom: 1px solid #ddd;
-                gap: 10px;
-                cursor: pointer;
-                transition: background-color 0.3s;
-            }
-            
-            .problem-row:hover {
-                background-color: #f5f5f5;
-            }
-            
-            .input-section {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-left: auto;
-            }
-            
-            .answer-input {
-                padding: 5px 10px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 16px;
-                width: 100px;
-            }
-            
-            .check-mark {
-                color: #4CAF50;
-                font-size: 20px;
-                visibility: hidden;
-            }
-            
-            .wrong-answer {
-                color: #f44336;
-            }
-            
-            .correct-answer {
-                color: #4CAF50;
-            }
-            
-            .verify-btn {
-                padding: 5px 10px;
-                background-color: #45c77b;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 14px;
-            }
-            
-            .verify-btn:hover {
-                background-color: #4dd688;
-            }
-            
-            .verify-btn:active {
-                background-color: #ff5722;
-                color: #ffffff;
-            }
-            
-            .show-all-btn {
-                display: block;
-                margin: 20px auto;
-                padding: 10px 20px;
-                font-size: 16px;
-                background-color: #45c77b;
-                color: #000000;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: bold;
-                transition: all 0.3s ease;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            }
-            
-            .show-all-btn:hover {
-                background-color: #4dd688;
-                transform: translateY(-2px);
-            }
-            
-            .show-all-btn:active {
-                background-color: #ff5722;
-                color: #ffffff;
-            }
-            
-            /* 答案樣式 */
-            .answer {
-                flex: 1;
-                font-size: 18px;
-                text-align: right;
-                color: #45c77b;
-                font-weight: bold;
-                display: none;  /* 預設隱藏答案 */
-                padding: 10px;
-            }
-            
-            /* 分數樣式 */
-            .fraction {
-                display: inline-block;
-                vertical-align: middle;
-                text-align: center;
-                margin: 0 5px;
-            }
-            
-            .fraction > span {
-                display: block;
-                padding: 3px;
-                text-align: center;
-            }
-            
-            .fraction span.numerator {
-                border-bottom: 1px solid black;
-            }
-            
-            .fraction span.denominator {
-                border-top: none;
-            }
-            
-            /* 顯示全部答案按鈕樣式 */
-            .show-all-btn {
-                display: block;
-                margin: 20px auto;
-                padding: 10px 20px;
-                font-size: 16px;
-                background-color: #45c77b;
-                color: #000000;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: bold;
-                transition: all 0.3s ease;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            }
-        </style>
-    `);
-    newTab.document.write('</head><body>');
-    newTab.document.write('<h1>題目和答案</h1>');
-    
-    newTab.document.write('<button class="show-all-btn" onclick="toggleAllAnswers()">顯示全部答案</button>');
-    
-    newTab.document.write('<div class="problem-container">');
+        <html>
+        <head>
+            <title>題目和答案</title>
+            <style>
+                body { 
+                    font-family: Arial, sans-serif; 
+                    margin: 20px; 
+                    max-width: 1000px;
+                    margin: 0 auto;
+                    padding: 20px;
+                }
+                h1 { 
+                    font-size: 24px; 
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                .problem-container {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+                }
+                .problem-row {
+                    display: flex;
+                    align-items: center;
+                    padding: 10px 0;
+                    border-bottom: 1px solid #ddd;
+                    gap: 10px;
+                    cursor: pointer;
+                    transition: background-color 0.3s;
+                }
+                
+                .problem-row:hover {
+                    background-color: #f5f5f5;
+                }
+                
+                /* 分數樣式 */
+                .fraction {
+                    display: inline-block;
+                    vertical-align: middle;
+                    text-align: center;
+                    margin: 0 5px;
+                }
+                
+                .fraction > span {
+                    display: block;
+                    padding: 3px;
+                    text-align: center;
+                }
+                
+                .fraction span.numerator {
+                    border-bottom: 1px solid black;
+                }
+                
+                .fraction span.denominator {
+                    border-top: none;
+                }
 
+                /* 其他樣式... */
+                .input-section {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    margin-left: auto;
+                }
+                
+                .answer-input {
+                    padding: 5px 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    width: 100px;
+                }
+                
+                .check-mark {
+                    color: #4CAF50;
+                    font-size: 20px;
+                    visibility: hidden;
+                }
+                
+                .wrong-answer {
+                    color: #f44336;
+                }
+                
+                .correct-answer {
+                    color: #4CAF50;
+                }
+                
+                .verify-btn {
+                    padding: 5px 10px;
+                    background-color: #45c77b;
+                    color: white;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                }
+                
+                .answer {
+                    flex: 1;
+                    font-size: 18px;
+                    text-align: right;
+                    color: #45c77b;
+                    font-weight: bold;
+                    display: none;
+                    padding: 10px;
+                }
+                
+                .show-all-btn {
+                    display: block;
+                    margin: 20px auto;
+                    padding: 10px 20px;
+                    font-size: 16px;
+                    background-color: #45c77b;
+                    color: #000000;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    transition: all 0.3s ease;
+                }
+            </style>
+        </head>
+        <body>
+            <h1>題目和答案</h1>
+            <button class="show-all-btn" onclick="toggleAllAnswers()">顯示全部答案</button>
+            <div class="problem-container">
+    `);
+
+    // 生成題目和答案的HTML
     questions.forEach((q, index) => {
         newTab.document.write(`
             <div class="problem-row" onclick="toggleAnswer(${index})">
                 <div class="question">${q.question}</div>
-                <div class="input-section">
+                <div class="input-section" onclick="event.stopPropagation()">
                     <span class="check-mark" id="check-${index}">✓</span>
                     <input type="text" class="answer-input" id="input-${index}" 
-                           onkeypress="if(event.key === 'Enter') verifyAnswer(${index})"
-                           onclick="event.stopPropagation()">
-                    <button class="verify-btn" onclick="event.stopPropagation(); verifyAnswer(${index})">檢查</button>
+                           onkeypress="if(event.key === 'Enter') verifyAnswer(${index})">
+                    <button class="verify-btn" onclick="verifyAnswer(${index})">檢查</button>
                 </div>
                 <div class="answer" id="answer-${index}">答案: ${q.answer}</div>
             </div>
         `);
     });
 
-    newTab.document.write('</div>');
-    
+    // 添加JavaScript函數
     newTab.document.write(`
         <script>
         const correctAnswers = ${JSON.stringify(questions.map(q => q.answer))};
@@ -1015,19 +979,48 @@ function displayQuestions(questions) {
             const userAnswer = input.value.trim();
             const correctAnswer = correctAnswers[index];
             
-            // 移除之前的樣式
             input.classList.remove('wrong-answer', 'correct-answer');
             
-            // 比對答案（忽略空格和大小寫）
-            const isCorrect = userAnswer.toLowerCase() === String(correctAnswer).toLowerCase();
-            
-            if (isCorrect) {
-                input.classList.add('correct-answer');
-                checkMark.style.visibility = 'visible';
-            } else {
-                input.classList.add('wrong-answer');
-                checkMark.style.visibility = 'hidden';
+            // 處理分數答案
+            if (typeof correctAnswer === 'string' && correctAnswer.includes('fraction')) {
+                const matches = correctAnswer.match(/<span class="numerator">(-?\\d+)<\\/span>.*?<span class="denominator">(-?\\d+)<\\/span>/);
+                if (matches) {
+                    const correctNumerator = parseInt(matches[1]);
+                    const correctDenominator = parseInt(matches[2]);
+                    const fractionMatch = userAnswer.match(/^-?(\\d+)\\/-?(\\d+)$|^-?(\\d+)\\/(\\d+)$/);
+                    if (fractionMatch) {
+                        const userNumerator = parseInt(fractionMatch[1] || fractionMatch[3]);
+                        const userDenominator = parseInt(fractionMatch[2] || fractionMatch[4]);
+                        const userIsNegative = userAnswer.startsWith('-') || userAnswer.includes('/-');
+                        const finalUserNumerator = userIsNegative ? -userNumerator : userNumerator;
+                        const isCorrect = (finalUserNumerator * correctDenominator) === (correctNumerator * userDenominator);
+                        checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
+                        input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
+                        return;
+                    }
+                }
             }
+            
+            // 處理指數答案
+            if (typeof correctAnswer === 'string' && /[²³⁴⁵⁶⁷⁸⁹]/.test(correctAnswer)) {
+                const superscripts = {'²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'};
+                let normalizedCorrect = correctAnswer;
+                for (const [sup, num] of Object.entries(superscripts)) {
+                    normalizedCorrect = normalizedCorrect.replace(new RegExp(sup, 'g'), '^' + num);
+                }
+                const exponentMatch = userAnswer.match(/^(\\d+)\\^(\\d+)$/);
+                if (exponentMatch) {
+                    const isCorrect = userAnswer === normalizedCorrect;
+                    checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
+                    input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
+                    return;
+                }
+            }
+            
+            // 一般答案的比對
+            const isCorrect = userAnswer.toLowerCase() === String(correctAnswer).toLowerCase();
+            checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
+            input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
         }
 
         function toggleAnswer(index) {
@@ -1051,8 +1044,8 @@ function displayQuestions(questions) {
         }
         </script>
     `);
-    
-    newTab.document.write('</body></html>');
+
+    newTab.document.write('</div></body></html>');
     newTab.document.close();
 }
 

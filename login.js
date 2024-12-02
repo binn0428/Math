@@ -1,6 +1,6 @@
 // 添加在文件開頭
 let lastLoginCheck = 0;
-const CHECK_INTERVAL = 5000; // 每秒檢查一次
+const CHECK_INTERVAL = 5000; // 每5秒檢查一次
 
 // 模擬用戶數據庫
 const defaultUsers = {
@@ -12,9 +12,8 @@ const defaultUsers = {
 
 // 初始化用戶數據
 function initUsers() {
-    if (!localStorage.getItem('users')) {
-        localStorage.setItem('users', JSON.stringify(defaultUsers));
-    }
+    // 強制重置用戶數據
+    localStorage.setItem('users', JSON.stringify(defaultUsers));
 }
 
 // 檢查登入狀態
@@ -78,7 +77,7 @@ function login() {
                 localStorage.setItem('users', JSON.stringify(users));
                 sessionStorage.setItem('loginStatus', 'true');
                 sessionStorage.setItem('username', username);
-                lastLoginCheck = Date.now(); // 更新最後檢查時間
+                lastLoginCheck = Date.now();
                 window.location.href = 'index.html';
             } else {
                 showError('此帳號已達到同時登入人數上限');
@@ -108,8 +107,7 @@ function logout() {
             localStorage.setItem('users', JSON.stringify(users));
         }
     }
-    sessionStorage.removeItem('loginStatus');
-    sessionStorage.removeItem('username');
+    sessionStorage.clear();
     window.location.href = 'login.html';
 }
 

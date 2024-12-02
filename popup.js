@@ -243,7 +243,7 @@ function generateQuestions(selectedType) {
                     answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
-            case 'factorOfSeven': // 7的因數判別
+            case 'factorOfSeven': // 7的因數判��
                 num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 7; // 因數
                 questions.push({
@@ -532,7 +532,7 @@ function generateQuestions(selectedType) {
                             }
                         }
                     }
-                    return null; // 如果找不到完���相等的指數形式，返回null
+                    return null; // 如果找不到完全相等的指數形式，返回null
                 }
                 
                 // 修改答案格式
@@ -820,12 +820,6 @@ function lcm(a, b) {
 }
 
 function displayQuestions(questions) {
-    const loginStatus = sessionStorage.getItem('loginStatus');
-    if (loginStatus !== 'true') {
-        window.location.href = 'login.html';
-        return;
-    }
-    
     if (questions.length === 0) {
         alert("沒有生成任題目！");
         return;

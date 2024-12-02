@@ -188,35 +188,35 @@ function generateQuestions(selectedType) {
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 3 的倍數嗎？`,
-                    answer: (num1 % 3 === 0) ? "是" : "不是"
+                    answer: (num1 % 3 === 0) ? "n" : "y"
                 });
                 break;
             case 'multipleOfFour': // 4的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 4 的倍數嗎？`,
-                    answer: (num1 % 4 === 0) ? "是" : "不是"
+                    answer: (num1 % 4 === 0) ? "n" : "y"
                 });
                 break;
             case 'multipleOfSix': // 6的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 6 的倍數嗎？`,
-                    answer: (num1 % 6 === 0) ? "是" : "不是"
+                    answer: (num1 % 6 === 0) ? "n" : "y"
                 });
                 break;
             case 'multipleOfNine': // 9的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 9 的倍數嗎？`,
-                    answer: (num1 % 9 === 0) ? "是" : "不是"
+                    answer: (num1 % 9 === 0) ? "n" : "y"
                 });
                 break;
             case 'multipleOfEleven': // 11的倍數判別
                 num1 = Math.floor(Math.random() * 9999999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 11 的倍數嗎？`,
-                    answer: (num1 % 11 === 0) ? "是" : "不��"
+                    answer: (num1 % 11 === 0) ? "n" : "y"
                 });
                 break;
             case 'factorOfThree': // 3因數判別
@@ -224,7 +224,7 @@ function generateQuestions(selectedType) {
                 num1 = 3; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "是" : "不是"
+                    answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
             case 'factorOfFour': // 4的因數判別
@@ -232,7 +232,7 @@ function generateQuestions(selectedType) {
                 num1 = 4; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "是" : "不是"
+                    answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
             case 'factorOfSix': // 6的因數判別
@@ -240,7 +240,7 @@ function generateQuestions(selectedType) {
                 num1 = 6; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "是" : "不是"
+                    answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
             case 'factorOfSeven': // 7的因數判別
@@ -248,31 +248,31 @@ function generateQuestions(selectedType) {
                 num1 = 7; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "是" : "不是"
+                    answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
             case 'factorOfEight': // 8的因數判別
-                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
+                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
                 num1 = 8; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "是" : "不是"
+                    answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
             case 'factorOfNine': // 9的因數判別
-                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
+                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
                 num1 = 9; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "是" : "不是"
+                    answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
             case 'factorOfEleven': // 11的因數判別
-                num2 = Math.floor(Math.random() * (9999999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
+                num2 = Math.floor(Math.random() * (9999999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
                 num1 = 11; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
-                    answer: (num2 % num1 === 0) ? "是" : "不是"
+                    answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
             case 'positiveNegativeAdd': // 正負數加法

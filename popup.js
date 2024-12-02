@@ -85,7 +85,7 @@ function generateQuestions(selectedType) {
             
                     questions.push({
                         question: `${i + 1}. ${a1}x + ${b1}y = ${c1} <br><br> &nbsp &nbsp ${a2}x + ${b2}y = ${c2}`,
-                        answer: `${formatNumber(x)}, ${formatNumber(y)}` // 使用新的格式化函數
+                        answer: `${formatNumber(x)},${formatNumber(y)}` // 使用新的格式化函數
                     });
                 } else {
                     // 如果行列式為零，則重新生成題目

@@ -1013,8 +1013,8 @@ function displayQuestions(questions) {
                 <div class="counter correct-counter">答對：<span id="correct-count">0</span></div>
             </div>
             <div class="button-container">
-                <button class="show-all-btn" onclick="toggleAllAnswers()">顯示全部答案</button>
-                <button class="check-all-btn" onclick="checkAllAnswers()">全部檢查及恢復</button>
+                <button class="show-all-btn" onclick="toggleAllAnswers()">全部答案</button>
+                <button class="check-all-btn" onclick="checkAllAnswers()">全部檢查</button>
                 <button class="clear-all-btn" onclick="clearAllAnswers()">全部清除</button>
             </div>
             <div class="problem-container">

@@ -961,9 +961,9 @@ function displayQuestions(questions) {
     // 生成題目和答案的HTML
     questions.forEach((q, index) => {
         newTab.document.write(`
-            <div class="problem-row" onclick="toggleAnswer(${index})">
+            <div class="problem-row">
                 <div class="question">${q.question}</div>
-                <div class="input-section" onclick="event.stopPropagation()">
+                <div class="input-section">
                     <span class="check-mark" id="check-${index}">✓</span>
                     <span class="x-mark" id="x-${index}">✗</span>
                     <input type="text" class="answer-input" id="input-${index}" 
@@ -984,6 +984,7 @@ function displayQuestions(questions) {
             const input = document.getElementById('input-' + index);
             const checkMark = document.getElementById('check-' + index);
             const xMark = document.getElementById('x-' + index);
+            const answer = document.getElementById('answer-' + index);
             const userAnswer = input.value.trim();
             const correctAnswer = correctAnswers[index];
             
@@ -994,8 +995,12 @@ function displayQuestions(questions) {
             
             // 如果輸入為空，直接返回
             if (!userAnswer) {
+                answer.style.display = 'none';
                 return;
             }
+            
+            // 顯示答案
+            answer.style.display = 'block';
             
             // 處理分數答案
             if (typeof correctAnswer === 'string' && correctAnswer.includes('fraction')) {
@@ -1049,12 +1054,6 @@ function displayQuestions(questions) {
             checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
             xMark.style.visibility = isCorrect ? 'hidden' : 'visible';
             input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
-        }
-
-        function toggleAnswer(index) {
-            const answer = document.getElementById('answer-' + index);
-            const isHidden = answer.style.display === 'none' || answer.style.display === '';
-            answer.style.display = isHidden ? 'block' : 'none';
         }
 
         function toggleAllAnswers() {

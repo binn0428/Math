@@ -78,13 +78,18 @@ function generateQuestions(selectedType) {
                     const x = determinantX / determinant; // 計算 x
                     const y = determinantY / determinant; // 計算 y
             
+                    // 格式化數字，移除不必要的0
+                    const formatNumber = (num) => {
+                        return Number(num.toFixed(2)).toString();
+                    };
+            
                     questions.push({
                         question: `${i + 1}. ${a1}x + ${b1}y = ${c1} <br><br> &nbsp &nbsp ${a2}x + ${b2}y = ${c2}`,
-                        answer: `x = ${x.toFixed(2)}, y = ${y.toFixed(2)}` // 顯示 x 和 y 的值
+                        answer: `${formatNumber(x)}, ${formatNumber(y)}` // 使用新的格式化函數
                     });
                 } else {
                     // 如果行列式為零，則重新生成題目
-                    // 這裡可以添加重新生成的邏輯
+                    i--; // 重新生成這一題
                 }
                 break;
             case 'twoDigitAdd': // 2位數加法
@@ -638,7 +643,7 @@ function generateQuestions(selectedType) {
                 // 修改答案格式
                 let expResult = findExponentialForm(expAnswer);
                 if(expResult) {
-                    // 如果能表示為指數形式，使用指數形式
+                    // 如果能表示為指數形式，用指數形式
                     questions.push({
                         question: `${i + 1}. ${expQuestion} = `,
                         answer: formatPower(expResult.base, expResult.exponent)

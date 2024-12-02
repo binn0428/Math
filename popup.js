@@ -399,7 +399,7 @@ function generateQuestions(selectedType) {
                     // 生成3個運算符（+、-、×、÷中隨機選擇）
                     operators = Array(3).fill().map(() => ['+', '-', '×', '÷'][Math.floor(Math.random() * 4)]);
                     
-                    // 格式化數字（負數加括號）
+                    // 格式化數字（負數加號）
                     formattedNums = nums.map(n => n < 0 ? `(${n})` : n);
                     
                     // 如果有除法運算，確保能整除
@@ -407,7 +407,7 @@ function generateQuestions(selectedType) {
                         if(operators[i] === '÷') {
                             // 確保除數不為0且能整除
                             while(nums[i+1] === 0 || nums[i] % nums[i+1] !== 0) {
-                                nums[i+1] = Math.floor(Math.random() * 20) - 10; // 生成較小的數以增加整除概率
+                                nums[i+1] = Math.floor(Math.random() * 20) - 10; // 生成較小的數以加整除概率
                                 formattedNums[i+1] = nums[i+1] < 0 ? `(${nums[i+1]})` : nums[i+1];
                             }
                         }
@@ -615,7 +615,7 @@ function generateQuestions(selectedType) {
                         break;
                 }
                 
-                // 新增一個函��來找到最接近的指數表示
+                // 新增一個函數來找到最接近的指數表示
                 function findExponentialForm(number) {
                     // 遍歷所有可能的底數（2-9）
                     for(let base = 2; base <= 9; base++) {
@@ -672,7 +672,7 @@ function generateQuestions(selectedType) {
                     }
                 } while (true);
                 break;
-            case 'findPoint': // 已知一點和距離求另一點
+            case 'findPoint': // 已知一點和距離求另點
                 let givenPoint, distance;
                 do {
                     // 生成一個-50到50之間的點
@@ -903,6 +903,12 @@ function displayQuestions(questions) {
                     visibility: hidden;
                 }
                 
+                .x-mark {
+                    color: #f44336;
+                    font-size: 20px;
+                    visibility: hidden;
+                }
+                
                 .wrong-answer {
                     color: #f44336;
                 }
@@ -959,6 +965,7 @@ function displayQuestions(questions) {
                 <div class="question">${q.question}</div>
                 <div class="input-section" onclick="event.stopPropagation()">
                     <span class="check-mark" id="check-${index}">✓</span>
+                    <span class="x-mark" id="x-${index}">✗</span>
                     <input type="text" class="answer-input" id="input-${index}" 
                            onkeypress="if(event.key === 'Enter') verifyAnswer(${index})">
                     <button class="verify-btn" onclick="verifyAnswer(${index})">檢查</button>
@@ -976,10 +983,19 @@ function displayQuestions(questions) {
         function verifyAnswer(index) {
             const input = document.getElementById('input-' + index);
             const checkMark = document.getElementById('check-' + index);
+            const xMark = document.getElementById('x-' + index);
             const userAnswer = input.value.trim();
             const correctAnswer = correctAnswers[index];
             
+            // 清除之前的樣式
             input.classList.remove('wrong-answer', 'correct-answer');
+            checkMark.style.visibility = 'hidden';
+            xMark.style.visibility = 'hidden';
+            
+            // 如果輸入為空，直接返回
+            if (!userAnswer) {
+                return;
+            }
             
             // 處理分數答案
             if (typeof correctAnswer === 'string' && correctAnswer.includes('fraction')) {
@@ -987,14 +1003,24 @@ function displayQuestions(questions) {
                 if (matches) {
                     const correctNumerator = parseInt(matches[1]);
                     const correctDenominator = parseInt(matches[2]);
-                    const fractionMatch = userAnswer.match(/^-?(\\d+)\\/-?(\\d+)$|^-?(\\d+)\\/(\\d+)$/);
+                    
+                    // 如果分母為1，也接受整數形式的答案
+                    if (correctDenominator === 1 && userAnswer === String(correctNumerator)) {
+                        checkMark.style.visibility = 'visible';
+                        xMark.style.visibility = 'hidden';
+                        input.classList.add('correct-answer');
+                        return;
+                    }
+                    
+                    // 支援帶負號的分數輸入格式
+                    const fractionMatch = userAnswer.match(/^-?\\d+\\/-?\\d+$|^-?\\d+\\/\\d+$/);
                     if (fractionMatch) {
-                        const userNumerator = parseInt(fractionMatch[1] || fractionMatch[3]);
-                        const userDenominator = parseInt(fractionMatch[2] || fractionMatch[4]);
+                        const [numerator, denominator] = userAnswer.split('/').map(n => parseInt(n));
                         const userIsNegative = userAnswer.startsWith('-') || userAnswer.includes('/-');
-                        const finalUserNumerator = userIsNegative ? -userNumerator : userNumerator;
-                        const isCorrect = (finalUserNumerator * correctDenominator) === (correctNumerator * userDenominator);
+                        const finalNumerator = userIsNegative ? -Math.abs(numerator) : Math.abs(numerator);
+                        const isCorrect = (finalNumerator * correctDenominator) === (correctNumerator * denominator);
                         checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
+                        xMark.style.visibility = isCorrect ? 'hidden' : 'visible';
                         input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
                         return;
                     }
@@ -1008,10 +1034,11 @@ function displayQuestions(questions) {
                 for (const [sup, num] of Object.entries(superscripts)) {
                     normalizedCorrect = normalizedCorrect.replace(new RegExp(sup, 'g'), '^' + num);
                 }
-                const exponentMatch = userAnswer.match(/^(\\d+)\\^(\\d+)$/);
+                const exponentMatch = userAnswer.match(/^\\d+\\^\\d+$/);
                 if (exponentMatch) {
                     const isCorrect = userAnswer === normalizedCorrect;
                     checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
+                    xMark.style.visibility = isCorrect ? 'hidden' : 'visible';
                     input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
                     return;
                 }
@@ -1020,6 +1047,7 @@ function displayQuestions(questions) {
             // 一般答案的比對
             const isCorrect = userAnswer.toLowerCase() === String(correctAnswer).toLowerCase();
             checkMark.style.visibility = isCorrect ? 'visible' : 'hidden';
+            xMark.style.visibility = isCorrect ? 'hidden' : 'visible';
             input.classList.add(isCorrect ? 'correct-answer' : 'wrong-answer');
         }
 

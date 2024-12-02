@@ -42,7 +42,7 @@ function login() {
         // 檢查密碼是否正確
         if (users[username].password === password) {
             // 檢查登入人數限制
-            if (users[username].activeLogins < 2) {
+            if (users[username].activeLogins < 1) {
                 users[username].activeLogins++;
                 localStorage.setItem('users', JSON.stringify(users));
                 sessionStorage.setItem('loginStatus', 'true');

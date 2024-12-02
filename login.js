@@ -6,9 +6,19 @@ const users = {
 
 // 檢查登入狀態
 function checkLoginStatus() {
+    const currentPage = window.location.pathname.split('/').pop();
     const loginStatus = sessionStorage.getItem('loginStatus');
-    if (loginStatus === 'true') {
+    
+    // 如果在登入頁面且已登入，跳轉到主頁
+    if (currentPage === 'login.html' && loginStatus === 'true') {
         window.location.href = 'index.html';
+        return;
+    }
+    
+    // 如果不在登入頁面且未登入，跳轉到登入頁
+    if (currentPage !== 'login.html' && loginStatus !== 'true') {
+        window.location.href = 'login.html';
+        return;
     }
 }
 
@@ -57,8 +67,11 @@ function logout() {
     window.location.href = 'login.html';
 }
 
-// 頁面載入時檢查登入狀態
-window.onload = checkLoginStatus;
+// 在每個頁面載入時檢查登入狀態
+window.onload = function() {
+    checkLoginStatus();
+    // 如果有其他 onload 事件，也要在這裡調用
+};
 
 // 監聽視窗關閉事件
 window.onbeforeunload = function() {

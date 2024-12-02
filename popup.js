@@ -532,7 +532,7 @@ function generateQuestions(selectedType) {
                             }
                         }
                     }
-                    return null; // 如果找不到完全相等的指數形式，返回null
+                    return null; // 如果找不到完���相等的指數形式，返回null
                 }
                 
                 // 修改答案格式
@@ -741,7 +741,7 @@ function generateQuestions(selectedType) {
             case 'standardForm': // 標準分解式
                 let number;
                 do {
-                    // ���成2-999的數字
+                    // 成2-999的數字
                     number = Math.floor(Math.random() * 998) + 2;
                     
                     // 檢查是否可以分解為2-9的指數形式
@@ -820,6 +820,12 @@ function lcm(a, b) {
 }
 
 function displayQuestions(questions) {
+    const loginStatus = sessionStorage.getItem('loginStatus');
+    if (loginStatus !== 'true') {
+        window.location.href = 'login.html';
+        return;
+    }
+    
     if (questions.length === 0) {
         alert("沒有生成任題目！");
         return;

@@ -12,13 +12,26 @@ const defaultUsers = {
 
 // 初始化用戶數據
 function initUsers() {
-    localStorage.setItem('users', JSON.stringify(defaultUsers));
+    if (!localStorage.getItem('users')) {
+        localStorage.setItem('users', JSON.stringify(defaultUsers));
+    }
 }
 
 // 檢查登入狀態
 function checkLoginStatus() {
     const currentPage = window.location.pathname.split('/').pop();
     const loginStatus = sessionStorage.getItem('loginStatus');
+    const username = sessionStorage.getItem('username');
+    
+    if (username) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        if (users && users[username]) {
+            if (loginStatus === 'true' && users[username].activeLogins === 0) {
+                users[username].activeLogins = 1;
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+        }
+    }
     
     if (currentPage === 'login.html' && loginStatus === 'true') {
         window.location.href = 'index.html';
@@ -39,7 +52,7 @@ function login() {
     }
     
     if (users[username] && users[username].password === password) {
-        if (users[username].activeLogins < 1) {
+        if (users[username].activeLogins === 0) {
             users[username].activeLogins = 1;
             localStorage.setItem('users', JSON.stringify(users));
             sessionStorage.setItem('loginStatus', 'true');

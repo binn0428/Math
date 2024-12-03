@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>數學題目生成器</title>
-    <link rel="stylesheet" href="popup.css"> <!-- 引入CSS樣式 -->
-    <script src="popup.js" defer></script> <!-- 確保popup.js在DOM加載後執行 -->
+    <link rel="stylesheet" href="popup.css">
+    <script src="popup.js" defer></script>
     <style>
         body {
             background-color: #b9b5b5;/*鐵灰色背景*/
@@ -147,76 +147,25 @@
     </style>
 </head>
 <body>
-    <h1>基本算式題型</h1>
-    <div class="button-grid">
-        <button id="twoDigitAdd">2位數加法</button>
-        <button id="threeDigitAdd">3位數加法</button>
-        <button id="fourDigitAdd">4位數加法</button>
-        <button id="twoDigitSubtract">2位數減法</button>
-        <button id="threeDigitSubtract">3位數減法</button>
-        <button id="fourDigitSubtract">4位數減法</button>
-        <button id="nineByNineMultiply">9x9乘法練習</button> <!-- 9x9乘法按鍵 -->
-        <button id="twoDigitMultiply">2x1位數乘法</button>
-        <button id="twoDigitMultiply2">2x2位數乘法</button>
-        <button id="threeDigitMultiply">3x1位數乘法</button>
-        <button id="distributiveLaw">乘法分配律</button>
-        <button id="twoDigitDivide">2位數除法</button>
-        <button id="threeDigitDivide">3位數除法</button>
-    </div>
+    <?php 
+    // 包含 index.php 的內容
+    include 'index.php';
+    ?>
+    
+    <!-- 如果 PHP 無法執行，則顯示以下備用內容 -->
+    <noscript>
+        <div style="color: red; text-align: center; padding: 20px;">
+            請確保您的伺服器支援 PHP，或直接訪問 index.php
+        </div>
+    </noscript>
 
-    <h1>進階項目</h1>
-    <button onclick="window.open('https://www.liveism.com/live-concept.php?q=4%E7%9A%84%E5%80%8D%E6%95%B8%E5%88%A4%E5%88%A5%E6%B3%95', '_blank')" 
-            style="
-                background-color: #808080;
-                color: #ffffff;
-                font-size: 20px;
-                padding: 10px 20px;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                font-weight: bold;
-                transition: all 0.3s ease;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-                margin: 10px auto;
-                display: block;
-            ">
-        公因倍數判別
-    </button>
-    <div class="button-grid">
-        <button id="gcd">最大公因數</button> <!-- 最大公因數 -->
-        <button id="lcm">最大公倍數</button> <!-- 最大公倍數 -->
-        <button id="multipleOfThree" class="multiple-button">3的倍數判別</button> <!-- 倍數判別按鈕 -->
-        <button id="multipleOfFour" class="multiple-button">4的倍數判別</button> <!-- 倍數判別按鈕 -->
-        <button id="multipleOfSix" class="multiple-button">6的倍數判別</button> <!-- 倍數判別按鈕 -->
-        <button id="multipleOfNine" class="multiple-button">9的倍數判別</button> <!-- 倍數判別按鈕 -->
-        <button id="multipleOfEleven" class="multiple-button">11的倍數判別</button> <!-- 倍數判別按鈕 -->
-        <button id="factorOfThree" class="factor-button">3的因數判別</button> <!-- 因數判別按鈕 -->
-        <button id="factorOfFour" class="factor-button">4的因數判別</button> <!-- 因數判別按鈕 -->
-        <button id="factorOfSix" class="factor-button">6的因數判別</button> <!-- 因數判別按鈕 -->
-        <button id="factorOfSeven" class="factor-button">7的因數判別</button> <!-- 新增的按鈕 -->
-        <button id="factorOfEight" class="factor-button">8的因數判別</button> <!-- 新增的按鈕 -->
-        <button id="factorOfNine" class="factor-button">9的因數判別</button> <!-- 因數判別按鈕 -->
-        <button id="factorOfEleven" class="factor-button">11的因數判別</button> <!-- 因數判別按鈕 -->
-    </div>
-    <h1>進階項目二</h1>
-    <div class="button-grid">
-        <button id="fractionOperations" class="factor-button">分數的四則運算</button> <!-- 分數運算判別按鈕 -->
-        <button id="positiveNegativeAdd">正負數加法</button> <!-- 新增的按鈕 -->
-        <button id="positiveNegativeSubtract">正負數減法</button> <!-- 新增的按鈕 -->
-        <button id="positiveNegativeMultiplyDivide">正負數乘除</button> <!-- 新增的按鈕 -->
-        <button id="fourTermsOperations">四項正負數四則運算</button>
-        <button id="threeTermsAdd">三項正負數加法</button> <!-- 新增的三項加法按鈕 -->
-        <button id="threeTermsSubtract">三項正負數減法</button> <!-- 新增的三項減法按鈕 -->
-        <button id="linearEquation">一元一次方程式</button> <!-- 新增的一元一次方程式按鈕 -->
-        <button id="twoVariableEquation">二元一次方程式</button> <!-- 新增的按鈕 -->
-        <button id="decimalOperations" class="factor-button">小數點四則運算</button> <!-- 新增小數點四則運算按鈕 -->
-        <button id="exponentialOperations">指數四則運算</button>
-        <button id="sameBaseExponential">同底數指數運算</button>
-        <button id="pointDistance">兩點間距離</button>
-        <button id="findPoint">已知一點求另一點</button>
-        <button id="exponentialDistribution">指數分配律</button>
-        <button id="standardForm">標準分解式</button>
-        <button id="perfectSquare">完全平方數練習</button>
-    </div>
+    <script>
+        // 檢查是否成功載入 PHP 內容
+        window.onload = function() {
+            if (!document.querySelector('.button-grid')) {
+                window.location.href = 'index.php';
+            }
+        }
+    </script>
 </body>
 </html>

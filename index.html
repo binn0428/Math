@@ -2,7 +2,6 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>數學題目生成器</title>
     <link rel="stylesheet" href="popup.css"> <!-- 引入CSS樣式 -->
     <script src="popup.js" defer></script> <!-- 確保popup.js在DOM加載後執行 -->
@@ -13,11 +12,11 @@
         /* ... existing styles ... */
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 自適應列數 */
-            gap: 15px;
+            grid-template-columns: repeat(4, 1fr); /* 4列 */
+            gap: 15px; /* 按鈕之間的間距 */
             padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
+            max-width: 1200px; /* 限制最大寬度 */
+            margin: 0 auto; /* 居中顯示 */
         }
 
         .button-grid button {
@@ -35,16 +34,8 @@
             top: 0;
             width: 100%; /* 確保按鈕填滿網格單元格 */
             min-height: 50px; /* 設置最小高度 */
-            white-space: normal; /* 允許文字換行 */
-            font-size: clamp(14px, 2vw, 16px); /* 自適應字體大小 */
-            line-height: 1.2; /* 調整行高 */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8px 12px;
-            height: auto; /* 讓高度自適應內容 */
-            min-height: 50px;
+            white-space: nowrap; /* 防止文字換行 */
+            font-size: 16px; /* 適當的文字大小 */
             font-weight: bold; /* 添加粗體 */
             font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif; /* 確保中文字體顯示清晰 */
         }
@@ -80,35 +71,9 @@
             border-top: 1px solid black;
         }
         /* 針對較小屏幕的響應式設計 */
-        @media (max-width: 1200px) {
-            .button-grid {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                padding: 15px;
-            }
-            .button-grid button {
-                font-size: clamp(13px, 1.8vw, 15px);
-            }
-        }
-
         @media (max-width: 768px) {
             .button-grid {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                padding: 10px;
-            }
-            .button-grid button {
-                font-size: clamp(12px, 1.6vw, 14px);
-                min-height: 45px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .button-grid {
-                grid-template-columns: 1fr;
-                padding: 10px;
-            }
-            .button-grid button {
-                font-size: clamp(12px, 1.4vw, 13px);
-                min-height: 40px;
+                grid-template-columns: repeat(2, 1fr); /* 在小屏幕上改為2列 */
             }
         }
 
@@ -171,30 +136,6 @@
         @media (max-width: 900px) {
             #problemsContainer {
                 grid-template-columns: 1fr; /* 在小屏幕上改為單列 */
-            }
-        }
-
-        /* 更新響應式設計 */
-        @media screen and (max-width: 480px) {
-            body {
-                padding: 10px 5px;
-            }
-
-            h1 {
-                font-size: 1.5em;
-                margin: 10px 0;
-            }
-
-            .button-grid {
-                grid-template-columns: 1fr;
-                gap: 10px;
-                padding: 5px;
-            }
-
-            .button-grid button {
-                font-size: clamp(12px, 4vw, 14px);
-                min-height: 35px;
-                padding: 6px 10px;
             }
         }
     </style>

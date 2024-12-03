@@ -894,7 +894,8 @@ function displayQuestions(questions) {
                     border: 1px solid #ddd;
                     border-radius: 4px;
                     font-size: 16px;
-                    width: 100px;
+                    width: 80px;
+                    height: 25px;
                 }
                 
                 .check-mark {
@@ -1303,7 +1304,7 @@ function simplifyFraction(fraction) {
     return formatFraction(simplifiedNumerator, simplifiedDenominator);
 }
 
-// 添加格式化分數的函數
+// 添加格式化分數���函數
 function formatFraction(numerator, denominator) {
     return `<div class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></div>`;
 }

@@ -2,6 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>數學題目生成器</title>
     <link rel="stylesheet" href="popup.css"> <!-- 引入CSS樣式 -->
     <script src="popup.js" defer></script> <!-- 確保popup.js在DOM加載後執行 -->
@@ -170,6 +171,30 @@
         @media (max-width: 900px) {
             #problemsContainer {
                 grid-template-columns: 1fr; /* 在小屏幕上改為單列 */
+            }
+        }
+
+        /* 更新響應式設計 */
+        @media screen and (max-width: 480px) {
+            body {
+                padding: 10px 5px;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin: 10px 0;
+            }
+
+            .button-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+                padding: 5px;
+            }
+
+            .button-grid button {
+                font-size: clamp(12px, 4vw, 14px);
+                min-height: 35px;
+                padding: 6px 10px;
             }
         }
     </style>

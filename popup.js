@@ -11,7 +11,7 @@ document.querySelectorAll('button').forEach(button => {
 function generateQuestions(selectedType) {
     let questions = [];
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 15; i++) {
         let num1, num2, num3; // 重新定義 num3 變數
             switch (selectedType) {
             case 'linearEquation': // 一元一次方程式

@@ -78,13 +78,18 @@ function generateQuestions(selectedType) {
                     const x = determinantX / determinant; // 計算 x
                     const y = determinantY / determinant; // 計算 y
             
+                    // 格式化數字，移除不必要的0
+                    const formatNumber = (num) => {
+                        return Number(num.toFixed(2)).toString();
+                    };
+            
                     questions.push({
                         question: `${i + 1}. ${a1}x + ${b1}y = ${c1} <br><br> &nbsp &nbsp ${a2}x + ${b2}y = ${c2}`,
-                        answer: `x = ${x.toFixed(2)}, y = ${y.toFixed(2)}` // 顯示 x 和 y 的值
+                        answer: `${formatNumber(x)},${formatNumber(y)}` // 使用新的格式化函數
                     });
                 } else {
                     // 如果行列式為零，則重新生成題目
-                    // 這裡可以添加重新生成的邏輯
+                    i--; // 重新生成這一題
                 }
                 break;
             case 'twoDigitAdd': // 2位數加法
@@ -188,35 +193,35 @@ function generateQuestions(selectedType) {
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 3 的倍數嗎？`,
-                    answer: (num1 % 3 === 0) ? "n" : "y"
+                    answer: (num1 % 3 === 0) ? "y" : "n"
                 });
                 break;
             case 'multipleOfFour': // 4的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 4 的倍數嗎？`,
-                    answer: (num1 % 4 === 0) ? "n" : "y"
+                    answer: (num1 % 4 === 0) ? "y" : "n"
                 });
                 break;
             case 'multipleOfSix': // 6的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 6 的倍數嗎？`,
-                    answer: (num1 % 6 === 0) ? "n" : "y"
+                    answer: (num1 % 6 === 0) ? "y" : "n"
                 });
                 break;
             case 'multipleOfNine': // 9的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 9 的倍數嗎？`,
-                    answer: (num1 % 9 === 0) ? "n" : "y"
+                    answer: (num1 % 9 === 0) ? "y" : "n"
                 });
                 break;
             case 'multipleOfEleven': // 11的倍數判別
                 num1 = Math.floor(Math.random() * 9999999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 11 的倍數嗎？`,
-                    answer: (num1 % 11 === 0) ? "n" : "y"
+                    answer: (num1 % 11 === 0) ? "y" : "n"
                 });
                 break;
             case 'factorOfThree': // 3因數判別
@@ -252,7 +257,7 @@ function generateQuestions(selectedType) {
                 });
                 break;
             case 'factorOfEight': // 8的因數判別
-                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
+                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 8; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
@@ -260,7 +265,7 @@ function generateQuestions(selectedType) {
                 });
                 break;
             case 'factorOfNine': // 9的因數判別
-                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
+                num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 9; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
@@ -268,7 +273,7 @@ function generateQuestions(selectedType) {
                 });
                 break;
             case 'factorOfEleven': // 11的因數判別
-                num2 = Math.floor(Math.random() * (9999999 - 10 + 1)) + 10; // 生成2位数到9位数的倍数
+                num2 = Math.floor(Math.random() * (9999999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 11; // 因數
                 questions.push({
                     question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
@@ -532,7 +537,7 @@ function generateQuestions(selectedType) {
                             }
                         }
                     }
-                    return null; // 如果找不到完���相等的指數形式，返回null
+                    return null; // 如果找不到完全相等的指數形式，返回null
                 }
                 
                 // 修改答案格式
@@ -638,7 +643,7 @@ function generateQuestions(selectedType) {
                 // 修改答案格式
                 let expResult = findExponentialForm(expAnswer);
                 if(expResult) {
-                    // 如果能表示為指數形式，使用指數形式
+                    // 如果能表示為指數形式，用指數形式
                     questions.push({
                         question: `${i + 1}. ${expQuestion} = `,
                         answer: formatPower(expResult.base, expResult.exponent)
@@ -680,31 +685,23 @@ function generateQuestions(selectedType) {
                 do {
                     // 生成一個-50到50之間的點
                     givenPoint = Math.floor(Math.random() * 101) - 50;
-                    // 生成1到50的距離（縮小範圍以確保結果在合範圍內）
+                    // 生成1到50的距離
                     distance = Math.floor(Math.random() * 50) + 1;
                     
-                    // 確保結果點在合理範圍內-50到50）
+                    // 確保結果點在合理範圍內(-50到50)
                     if (Math.abs(givenPoint) + distance <= 50) {
-                        // 格式化顯示（負數加括號）
+                        // 格式化顯示（題目中的負數加括號）
                         let formattedPoint = givenPoint < 0 ? `(${givenPoint})` : givenPoint;
                         
                         // 隨機決定是要求左邊的點還是右邊的點
                         let isLeftPoint = Math.random() < 0.5;
                         
-                        // 計算另一個可能的點（左點和右點）
-                        let leftPoint = givenPoint - distance;
-                        let rightPoint = givenPoint + distance;
-                        
-                        // 根據選擇設定答案
-                        let answer = isLeftPoint ? leftPoint : rightPoint;
-                        let explanation = `${formattedPoint} ${isLeftPoint ? '-' : '+'} ${distance} = ${answer}`;
-                        
-                        // 格式化答案（如果是負數，加上括號）
-                        let formattedAnswer = answer < 0 ? `(${answer})` : answer;
+                        // 計算答案點
+                        let answer = isLeftPoint ? givenPoint - distance : givenPoint + distance;
                         
                         questions.push({
                             question: `${i + 1}. 數線上一點 ${formattedPoint}，與另一點的距離為 ${distance}，求在其${isLeftPoint ? '左' : '右'}側的點。`,
-                            answer: `${formattedAnswer} (${explanation})`
+                            answer: answer  // 直接使用答案，不加括號
                         });
                         break;
                     }
@@ -783,7 +780,7 @@ function generateQuestions(selectedType) {
                         // 類型1：判斷是否為完全平方數
                         questions.push({
                             question: `${i + 1}. ${squareNum} 是完全平方數嗎？`,
-                            answer: "是"
+                            answer: "y"
                         });
                     } else if (questionType < 0.66) {
                         // 類型2求平方根
@@ -820,12 +817,6 @@ function lcm(a, b) {
 }
 
 function displayQuestions(questions) {
-    const loginStatus = sessionStorage.getItem('loginStatus');
-    if (loginStatus !== 'true') {
-        window.location.href = 'login.html';
-        return;
-    }
-    
     if (questions.length === 0) {
         alert("沒有生成任題目！");
         return;
@@ -1277,7 +1268,12 @@ function calculateWithPriority(nums, operators) {
 
 // 在文件末尾添加辅助函数
 function formatPower(base, exponent) {
-    // 將數字轉換為上標形
+    // 如果指數為1，直接返回底數
+    if (exponent === 1) {
+        return base.toString();
+    }
+    
+    // 將數字轉換為上標形式
     const superscripts = {
         '1': '¹',
         '2': '²',
@@ -1295,8 +1291,16 @@ function formatPower(base, exponent) {
 // 修改 simplifyFraction 函數
 function simplifyFraction(fraction) {
     const [numerator, denominator] = fraction.split('/').map(Number);
-    const gcdValue = gcd(numerator, denominator);
-    return formatFraction(numerator / gcdValue, denominator / gcdValue);
+    const gcdValue = gcd(Math.abs(numerator), Math.abs(denominator));
+    const simplifiedNumerator = numerator / gcdValue;
+    const simplifiedDenominator = denominator / gcdValue;
+    
+    // 如果分母為1，直接返回分子
+    if (simplifiedDenominator === 1) {
+        return simplifiedNumerator.toString();
+    }
+    
+    return formatFraction(simplifiedNumerator, simplifiedDenominator);
 }
 
 // 添加格式化分數的函數

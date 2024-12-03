@@ -43,15 +43,14 @@ function checkLoginStatus() {
 // 登入函數
 function login() {
     const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
     const users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
     
-    if (!username || !password) {
-        showError('請輸入帳號和密碼');
+    if (!username) {
+        showError('請輸入帳號');
         return;
     }
     
-    if (users[username] && users[username].password === password) {
+    if (users[username]) {  // 只檢查帳號是否存在
         if (users[username].activeLogins < users[username].maxLogins) {
             users[username].activeLogins += 1;
             localStorage.setItem('users', JSON.stringify(users));
@@ -62,7 +61,7 @@ function login() {
             showError('此帳號已在其他裝置登入中');
         }
     } else {
-        showError('帳號或密碼錯誤');
+        showError('此帳號不存在');
     }
 }
 

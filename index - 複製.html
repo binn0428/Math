@@ -141,52 +141,55 @@
 
         /* 添加主要按鈕的樣式 */
         .main-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            padding: 40px 20px;
+            max-width: 600px; /* 調整寬度使所有按鈕寬度一致 */
             margin: 0 auto;
         }
 
         .main-button {
-            background-color: #45c77b;
-            color: #000000;
+            background: linear-gradient(to bottom, #e0e0e0, #b0b0b0); /* 灰色漸層背景 */
+            color: #000000; /* 黑色文字 */
             border: none;
-            border-radius: 8px;
-            padding: 20px;
+            border-radius: 15px;
+            padding: 25px 40px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
-                        inset 0 -8px 10px rgba(0, 0, 0, 0.1),
-                        inset 0 8px 10px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 0 #808080,
+                        0 15px 20px rgba(0, 0, 0, 0.2);
             font-size: 24px;
             font-weight: bold;
             font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
-            min-height: 100px;
+            text-align: center;
+            width: 100%; /* 確保所有按鈕寬度相同 */
+            min-height: 80px; /* 統一按鈕高度 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
         }
 
         .main-button:hover {
-            background-color: #4dd688;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
-                        inset 0 -8px 10px rgba(0, 0, 0, 0.1),
-                        inset 0 8px 10px rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 13px 0 #808080,
+                        0 20px 25px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to bottom, #f0f0f0, #c0c0c0);
         }
 
         .main-button:active {
-            background-color: #ff5722;
-            color: #ffffff;
-            transform: translateY(1px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2),
-                        inset 0 -4px 5px rgba(0, 0, 0, 0.1),
-                        inset 0 4px 5px rgba(255, 255, 255, 0.1);
+            transform: translateY(5px);
+            box-shadow: 0 3px 0 #808080,
+                        0 5px 10px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(to bottom, #b0b0b0, #909090);
         }
 
-        /* 隱藏的內容區域 */
+        /* 調整內容區域的上邊距 */
         .content-section {
             display: none;
             margin-top: 20px;
+            padding-top: 30px; /* 減少上邊距 */
         }
 
         .content-section.active {
@@ -199,6 +202,54 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* 修改返回按鈕容器和按鈕的樣式 */
+        .return-button-container {
+            padding: 20px 20px 0 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .return-button-container button {
+            background-color: #1e90ff; /* 藍色背景 */
+            color: #ffd700; /* 黃色文字 */
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2),
+                        inset 0 -8px 10px rgba(0, 0, 0, 0.1),
+                        inset 0 8px 10px rgba(255, 255, 255, 0.1);
+            position: relative;
+            top: 0;
+            min-height: 50px;
+            white-space: nowrap;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: "Microsoft JhengHei", "微軟正黑體", sans-serif;
+            width: fit-content; /* 寬度適應內容 */
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .return-button-container button:hover {
+            background-color: #4169e1; /* 懸浮時稍深的藍色 */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3),
+                        inset 0 -8px 10px rgba(0, 0, 0, 0.1),
+                        inset 0 8px 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .return-button-container button:active {
+            background-color: #0000cd; /* 按下時更深的藍色 */
+            color: #ffd700;
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2),
+                        inset 0 -4px 5px rgba(0, 0, 0, 0.1),
+                        inset 0 4px 5px rgba(255, 255, 255, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -210,6 +261,9 @@
 
     <!-- 基本算式題型區域 -->
     <div id="basic" class="content-section">
+        <div class="return-button-container">
+            <button onclick="backToMain()">返回主選單</button>
+        </div>
         <h1>基本算式題型</h1>
         <div class="button-grid">
             <button id="twoDigitAdd">2位數加法</button>
@@ -230,11 +284,10 @@
 
     <!-- 進階項目一區域 -->
     <div id="advanced1" class="content-section">
+        <div class="return-button-container">
+            <button onclick="backToMain()">返回主選單</button>
+        </div>
         <h1>進階項目一</h1>
-        <button onclick="window.open('https://www.liveism.com/live-concept.php?q=4%E7%9A%84%E5%80%8D%E6%95%B8%E5%88%A4%E5%88%A5%E6%B3%95', '_blank')" 
-                style="background-color: #808080; /* 原有的按鈕樣式 */ ">
-            公因倍數判別
-        </button>
         <div class="button-grid">
             <!-- 原有的進階項目一按鈕 -->
             <button id="gcd">最大公因數</button>
@@ -257,6 +310,9 @@
 
     <!-- 進階項目二區域 -->
     <div id="advanced2" class="content-section">
+        <div class="return-button-container">
+            <button onclick="backToMain()">返回主選單</button>
+        </div>
         <h1>進階項目二</h1>
         <div class="button-grid">
             <!-- 原有的進階項目二按鈕 -->
@@ -283,13 +339,26 @@
 
     <script>
         function toggleSection(sectionId) {
-            // 隱藏所有區域
+            // 隱藏主按鈕區域
+            document.querySelector('.main-buttons').style.display = 'none';
+            
+            // 隱藏所有內容區域
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
             
             // 顯示選中的區域
             document.getElementById(sectionId).classList.add('active');
+        }
+
+        function backToMain() {
+            // 顯示主按鈕區域
+            document.querySelector('.main-buttons').style.display = 'flex';
+            
+            // 隱藏所有內容區域
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
         }
     </script>
 </body>

@@ -9,6 +9,9 @@
     <style>
         body {
             background-color: #b9b5b5;/*鐵灰色背景*/
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
         }
         /* ... existing styles ... */
         .button-grid {
@@ -148,6 +151,11 @@
             padding: 40px 20px;
             max-width: 600px; /* 調整寬度使所有按鈕寬度一致 */
             margin: 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%; /* 設置寬度為螢幕的80% */
         }
 
         .main-button {
@@ -200,7 +208,8 @@
         /* 響應式設計 */
         @media (max-width: 768px) {
             .main-buttons {
-                grid-template-columns: 1fr;
+                width: 90%; /* 在手機上佔據更多寬度 */
+                padding: 20px;
             }
         }
 
@@ -353,7 +362,7 @@
         }
 
         function backToMain() {
-            // 顯示主按鈕區域
+            // 顯���主按鈕區域
             document.querySelector('.main-buttons').style.display = 'flex';
             
             // 隱藏所有內容區域

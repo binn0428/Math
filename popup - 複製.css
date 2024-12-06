@@ -1,0 +1,47 @@
+/* popup.css */
+body {
+    font-family: Arial, sans-serif;
+    width: 700px; /* 設定彈出頁面寬度為500像素 */
+}
+
+h1 {
+    font-size: 20px; /* 設定標題字體大小為14像素 */
+    text-align: center;
+}
+
+.button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4列 */
+    gap: 10px; /* 按鈕之間的間距 */
+    padding: 10px;
+}
+
+button {
+    display: flex; /* 使用flexbox */
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    padding: 10px; /* 增加按鈕的內邊距 */
+    font-size: 18px; /* 設定按鈕字體大小為14像素 */
+    font-weight: bold; /* 設置字體為粗體 */
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #003366; /* 深藍色背景 */
+    color: yellow; /* 黃色字體 */
+    transition: background-color 0.3s;
+    width: 100%; /* 設置按鈕寬度為100%以填滿格子 */
+    height: 60px; /* 設置按鈕高度，確保為橫向長方形 */
+}
+
+button:hover {
+    background-color: #002244; /* 滑鼠懸停時的背景顏色 */
+}
+
+button.active {
+    background-color: #8b8787; /* 點選後的背景顏色 */
+}
+/* 題目和答案的樣式 */
+.question, .answer {
+    margin: 30px 0; /* 增加上下間距 */
+    font-size: 16px; /* 題目和答案字體大小 */
+}

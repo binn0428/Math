@@ -15,8 +15,6 @@
             min-height: 100vh;
             margin: 0;
             padding: 0;
-            position: relative;
-            overflow-x: hidden;
         }
 
         /* 為了確保背景圖片不會影響內容的可讀性，可以添加一個半透明遮罩 */
@@ -171,16 +169,13 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
-            padding: 20px;
-            width: 80%;
+            padding: 40px 20px;
             max-width: 600px;
+            margin: 0 auto;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            margin: 0;
-            justify-content: center;
-            align-items: center;
         }
 
         .main-button {
@@ -233,14 +228,7 @@
         /* 響應式設計 */
         @media (max-width: 768px) {
             .main-buttons {
-                width: 90%;
-                padding: 15px;
-            }
-            
-            .main-button {
-                padding: 20px 30px;
-                font-size: 20px;
-                min-height: 70px;
+                grid-template-columns: 1fr;
             }
         }
 
@@ -344,7 +332,7 @@
             <button id="factorOfSeven" class="factor-button">7的因數判別</button> <!-- 新增的按鈕 -->
             <button id="factorOfEight" class="factor-button">8的因數判別</button> <!-- 新增的按鈕 -->
             <button id="factorOfNine" class="factor-button">9的因數判別</button> <!-- 因數判別按鈕 -->
-            <button id="factorOfEleven" class="factor-button">11的因數判別</button> <!-- ���數判別按鈕 -->
+            <button id="factorOfEleven" class="factor-button">11的因數判別</button> <!-- 因數判別按鈕 -->
             <!-- ... 其他進階項目一按鈕 ... -->
         </div>
     </div>

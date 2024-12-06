@@ -169,16 +169,13 @@
             display: flex;
             flex-direction: column;
             gap: 30px;
-            padding: 20px;
-            width: 80%;
+            padding: 40px 20px;
             max-width: 600px;
+            margin: 0 auto;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            margin: 0;
-            justify-content: center;
-            align-items: center;
         }
 
         .main-button {
@@ -220,18 +217,8 @@
         /* 調整內容區域的上邊距 */
         .content-section {
             display: none;
-            margin: 0; /* 移除外邊距 */
-            padding: 20px; /* 添加內邊距 */
-            max-width: 90vw; /* 最大寬度為視窗的90% */
-            max-height: 90vh; /* 最大高度為視窗的90% */
-            overflow: auto; /* 內容溢出時顯示滾動條 */
-            position: fixed; /* 固定定位 */
-            top: 50%; /* 垂直居中 */
-            left: 50%; /* 水平居中 */
-            transform: translate(-50%, -50%); /* 調整位置以確保居中 */
-            background-color: white; /* 背景顏色 */
-            border-radius: 8px; /* 圓角 */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 陰影效果 */
+            margin-top: 20px;
+            padding-top: 30px; /* 減少上邊距 */
         }
 
         .content-section.active {

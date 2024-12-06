@@ -4,12 +4,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    max-width: 90vw;
-    max-height: 90vh;
-    width: auto;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 1000px;
+    max-height: 85vh;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -21,40 +21,137 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-}
-
-.popup-buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    margin-top: 20px;
+    gap: 25px;
 }
 
 #problemsContainer {
     width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
+    display: grid;
+    gap: 20px;
+    padding: 15px;
+}
+
+.problem-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.problem-number {
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: bold;
+    color: #2c3e50;
+    min-width: 30px;
 }
 
 .problem-text {
+    font-size: clamp(14px, 2.5vw, 20px);
+    color: #34495e;
+    line-height: 1.5;
     word-break: break-word;
     overflow-wrap: break-word;
 }
 
+.problem-answer {
+    font-size: clamp(14px, 2.5vw, 20px);
+    font-weight: bold;
+    color: #27ae60;
+    text-align: right;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 25px;
+    width: 100%;
+}
+
+.popup-buttons button {
+    padding: 12px 25px;
+    font-size: clamp(14px, 2vw, 16px);
+    border-radius: 8px;
+    border: none;
+    background: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.popup-buttons button:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* 捲軸樣式 */
+.popup::-webkit-scrollbar {
+    width: 8px;
+}
+
+.popup::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.popup::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+/* 響應式設計 */
 @media (max-width: 768px) {
     .popup {
-        width: 95vw;
-        padding: 15px;
+        padding: 20px;
+        width: 95%;
     }
-    
+
+    .problem-row {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .problem-number {
+        justify-self: center;
+    }
+
+    .problem-answer {
+        text-align: center;
+        padding-top: 10px;
+        border-top: 1px solid #eee;
+    }
+
     .popup-buttons {
         flex-direction: column;
-        width: 100%;
     }
-    
+
     .popup-buttons button {
         width: 100%;
-        margin: 5px 0;
+        padding: 15px;
+    }
+}
+
+/* 列印樣式 */
+@media print {
+    .popup {
+        position: relative;
+        transform: none;
+        box-shadow: none;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .popup-buttons {
+        display: none;
+    }
+
+    .problem-row {
+        break-inside: avoid;
+        page-break-inside: avoid;
     }
 } 

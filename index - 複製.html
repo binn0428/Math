@@ -289,6 +289,7 @@
         <button class="main-button" onclick="toggleSection('basic')">基本算式題型</button>
         <button class="main-button" onclick="toggleSection('advanced1')">進階項目一</button>
         <button class="main-button" onclick="toggleSection('advanced2')">進階項目二</button>
+        <button class="main-button" onclick="toggleSection('advanced3')">進階項目三</button>
     </div>
 
     <!-- 基本算式題型區域 -->
@@ -352,20 +353,32 @@
             <button id="positiveNegativeAdd">正負數加法</button> <!-- 新增的按鈕 -->
             <button id="positiveNegativeSubtract">正負數減法</button> <!-- 新增的按鈕 -->
             <button id="positiveNegativeMultiplyDivide">正負數乘除</button> <!-- 新增的按鈕 -->
-            <button id="fourTermsOperations">四項正負數四則運算</button>
+            <button id="fourTermsOperations">四項正負數四則</button>
             <button id="threeTermsAdd">三項正負數加法</button> <!-- 新增的三項加法按鈕 -->
             <button id="threeTermsSubtract">三項正負數減法</button> <!-- 新增的三項減法按鈕 -->
-            <button id="linearEquation">一元一次方程式</button> <!-- 新增的一元一次方程式按鈕 -->
-            <button id="twoVariableEquation">二元一次方程式</button> <!-- 新增的按鈕 -->
             <button id="decimalOperations" class="factor-button">小數點四則運算</button> <!-- 新增小數點四則運算按鈕 -->
-            <button id="exponentialOperations">指數四則運算</button>
-            <button id="sameBaseExponential">同底數指數運算</button>
             <button id="pointDistance">兩點間距離</button>
-            <button id="findPoint">已知一點求另一點</button>
-            <button id="exponentialDistribution">指數分配律</button>
-            <button id="standardForm">標準分解式</button>
-            <button id="perfectSquare">完全平方數練習</button>
+            <button id="findPoint">已知A點求B點</button>
             <!-- ... 其他進階項目二按鈕 ... -->
+        </div>
+    </div>
+
+    <!-- 進階項目三區域 -->
+    <div id="advanced3" class="content-section">
+        <div class="return-button-container">
+            <button onclick="backToMain()">返回主選單</button>
+        </div>
+        <h1>進階項目三</h1>
+        <div class="button-grid">
+        <button id="linearEquation">一元一次方程式</button> <!-- 新增的一元一次方程式按鈕 -->
+        <button id="twoVariableEquation">二元一次方程式</button> <!-- 新增的按鈕 -->
+        <button id="exponentialOperations">指數四則運算</button>
+        <button id="sameBaseExponential">同底數指數運算</button>
+        <button id="exponentialDistribution">指數分配律</button>
+        <button id="standardForm">標準分解式</button>
+        <button id="perfectSquare">完全平方數練習</button>
+       
+            <!-- ... 其他進階項目三按鈕 ... -->
         </div>
     </div>
 

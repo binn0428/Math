@@ -332,8 +332,8 @@ function generateQuestions(selectedType) {
                 });
                 break;
             case 'decimalOperations': // 小數點四則運算
-                let decimalNum1 = (Math.random() * 10).toFixed(2); // 生成0到100的隨機小數
-                let decimalNum2 = (Math.random() * 10).toFixed(2); // 生成0到100的隨機小數
+                let decimalNum1 = (Math.random() * 10).toFixed(1); // 生成0到100的隨機小數，保留一位小數
+                let decimalNum2 = (Math.random() * 10).toFixed(1); // 生成0到100的隨機小數，保留一位小數
                 const decimalOperations = ['+', '-', '*', '/'];
                 const decimalOperation = decimalOperations[Math.floor(Math.random() * decimalOperations.length)];
                 
@@ -342,20 +342,34 @@ function generateQuestions(selectedType) {
                 switch (decimalOperation) {
                     case '+':
                         decimalQuestion = `${decimalNum1} + ${decimalNum2}`;
-                        decimalAnswer = (parseFloat(decimalNum1) + parseFloat(decimalNum2)).toFixed(2);
+                        decimalAnswer = (parseFloat(decimalNum1) + parseFloat(decimalNum2)).toFixed(1);
                         break;
                     case '-':
                         decimalQuestion = `${decimalNum1} - ${decimalNum2}`;
-                        decimalAnswer = (parseFloat(decimalNum1) - parseFloat(decimalNum2)).toFixed(2);
+                        decimalAnswer = (parseFloat(decimalNum1) - parseFloat(decimalNum2)).toFixed(1);
                         break;
                     case '*':
                         decimalQuestion = `${decimalNum1} × ${decimalNum2}`;
-                        decimalAnswer = (parseFloat(decimalNum1) * parseFloat(decimalNum2)).toFixed(2);
+                        decimalAnswer = (parseFloat(decimalNum1) * parseFloat(decimalNum2)).toFixed(1);
                         break;
                     case '/':
                         decimalQuestion = `${decimalNum1} ÷ ${decimalNum2}`;
-                        decimalAnswer = (parseFloat(decimalNum1) / parseFloat(decimalNum2)).toFixed(2);
+                        // Ensure division by zero does not occur and the answer is rounded to one decimal place
+                        if (parseFloat(decimalNum2) === 0) {
+                            decimalNum2 = (Math.random() * 10).toFixed(1); // Generate a new decimalNum2 to avoid division by zero
+                        }
+                        // Ensure division results in a whole number or a decimal with one place
+                        if (parseFloat(decimalNum1) % parseFloat(decimalNum2) === 0) {
+                            decimalAnswer = (parseFloat(decimalNum1) / parseFloat(decimalNum2)).toFixed(0);
+                        } else {
+                            decimalAnswer = (parseFloat(decimalNum1) / parseFloat(decimalNum2)).toFixed(1);
+                        }
                         break;
+                }
+                
+                // Ensure the answer is positive
+                if (decimalAnswer < 0) {
+                    decimalAnswer = Math.abs(decimalAnswer).toFixed(1);
                 }
                 
                 questions.push({

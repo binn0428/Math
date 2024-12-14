@@ -283,7 +283,7 @@ function generateQuestions(selectedType) {
             case 'positiveNegativeAdd': // 正負數加法
                 num1 = Math.floor(Math.random() * 50) - 10; // 生成-10到9的數字
                 num2 = Math.floor(Math.random() * 50) - 10; // 生成-10到9的數字
-                // 將負���加上號
+                // 將負數加上號
                 questions.push({
                     question: `${i + 1}. ${num1 < 0 ? `(${num1})` : num1} + ${num2 < 0 ? `(${num2})` : num2} =`,
                     answer: num1 + num2
@@ -1065,7 +1065,7 @@ function displayQuestions(questions) {
         </head>
         <body>
             <div class="header-container">
-                <button class="back-btn" onclick="window.close()">返回上頁</button>
+                <button class="back-btn" onclick="window.close()">關閉分頁</button>
                 <h1>題目和答案</h1>
             </div>
             <div class="counter-container">

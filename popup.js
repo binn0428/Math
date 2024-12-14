@@ -283,7 +283,7 @@ function generateQuestions(selectedType) {
             case 'positiveNegativeAdd': // 正負數加法
                 num1 = Math.floor(Math.random() * 50) - 10; // 生成-10到9的數字
                 num2 = Math.floor(Math.random() * 50) - 10; // 生成-10到9的數字
-                // 將負數加上號
+                // 將負���加上號
                 questions.push({
                     question: `${i + 1}. ${num1 < 0 ? `(${num1})` : num1} + ${num2 < 0 ? `(${num2})` : num2} =`,
                     answer: num1 + num2
@@ -503,7 +503,7 @@ function generateQuestions(selectedType) {
                     let dividend = samePoweredNums[0];
                     let divisor = samePoweredNums[1];
                     
-                    // 如果不能整除，重新生成第二個指數直到能整除
+                    // 如果不能整除，重新生成第二個指數直能整除
                     while(divisor === 0 || dividend % divisor !== 0 || dividend / divisor > 999) {
                         sameExpNums[1] = Math.floor(Math.random() * 8) + 2; // 2-9的指數
                         samePoweredNums[1] = Math.pow(sameBase, sameExpNums[1]);
@@ -1016,10 +1016,58 @@ function displayQuestions(questions) {
                 .correct-counter {
                     color: #4CAF50;
                 }
+                
+                /* 修改返回按鈕樣式 */
+                .back-btn {
+                    padding: 10px 20px;
+                    background-color: #4a90e2;
+                    color: white;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                    margin-right: 20px; /* 與標題保持間距 */
+                }
+                
+                .back-btn:hover {
+                    background-color: #357abd;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                }
+                
+                .back-btn:active {
+                    transform: translateY(0);
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                }
+                
+                /* 修改標題樣式，使其與按鈕並排 */
+                .header-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 20px 0;
+                    position: relative;
+                }
+
+                .back-btn {
+                    position: absolute;
+                    left: 20px;
+                }
+
+                h1 {
+                    margin: 0;
+                    flex-grow: 1;
+                    text-align: center;
+                }
             </style>
         </head>
         <body>
-            <h1>題目和答案</h1>
+            <div class="header-container">
+                <button class="back-btn" onclick="window.close()">返回上頁</button>
+                <h1>題目和答案</h1>
+            </div>
             <div class="counter-container">
                 <div class="counter wrong-counter">答錯：<span id="wrong-count">0</span></div>
                 <div class="counter correct-counter">答對：<span id="correct-count">0</span></div>
@@ -1318,7 +1366,7 @@ function simplifyFraction(fraction) {
     return formatFraction(simplifiedNumerator, simplifiedDenominator);
 }
 
-// 添加格式化分數���函數
+// 添加格式化分數函數
 function formatFraction(numerator, denominator) {
     return `<div class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></div>`;
 }

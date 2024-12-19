@@ -283,6 +283,31 @@
                         inset 0 4px 5px rgba(255, 255, 255, 0.1);
         }
     </style>
+    <script>
+        // 禁用右鍵選單
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // 禁用 F12、Ctrl+Shift+I、Ctrl+Shift+J、Ctrl+U
+        document.addEventListener('keydown', function(e) {
+            if (
+                e.key === 'F12' || 
+                (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                (e.ctrlKey && e.key === 'U')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // 禁用開發者工具
+        setInterval(function() {
+            debugger;
+        }, 100);
+    </script>
 </head>
 <body>
     <div class="main-buttons">

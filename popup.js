@@ -89,7 +89,7 @@ function generateQuestions(selectedType) {
                     });
                 } else {
                     // 如果行列式為零，則重新生成題目
-                    i--; // 重新���成這一題
+                    i--; // 重新生成這一題
                 }
                 break;
             case 'twoDigitAdd': // 2位數加法
@@ -823,96 +823,6 @@ function generateQuestions(selectedType) {
                     }
                     break;
                 } while (true);
-                break;
-            case 'threeTermExponential': // 三項指數四則運算
-                let term1, term2, term3, operator1, operator2, result;
-                do {
-                    // 生成三個指數運算式和兩個運算符
-                    term1 = generateExponentialTerm();
-                    term2 = generateExponentialTerm();
-                    term3 = generateExponentialTerm();
-                    operator1 = getRandomOperator();
-                    operator2 = getRandomOperator();
-
-                    // 計算結果
-                    result = calculateThreeTermResult(term1, term2, term3, operator1, operator2);
-                    
-                    // 確保結果在合理範圍內
-                } while (result > 999 || result < -999 || !Number.isInteger(result));
-
-                // 嘗試將結果轉換為指數形式
-                let expForm = findExponentialForm(result);
-                let formattedAnswer = expForm ? formatPower(expForm.base, expForm.exponent) : result;
-
-                // 格式化題目
-                questions.push({
-                    question: `${i + 1}. ${formatExponentialTerm(term1)} ${operator1} ${formatExponentialTerm(term2)} ${operator2} ${formatExponentialTerm(term3)} = `,
-                    answer: formattedAnswer
-                });
-                break;
-            case 'arithmeticSequence': // 等差數列求n項
-                let firstTerm, commonDiff, nthTerm;
-                do {
-                    // 生成首項 (1-20)
-                    firstTerm = Math.floor(Math.random() * 20) + 1;
-                    // 生成公差 (-10 到 10，但不包含0)
-                    commonDiff = Math.floor(Math.random() * 20) - 10;
-                    if (commonDiff === 0) commonDiff = 1;
-                    // 生成要求的項數 (第n項，範圍3-10)
-                    nthTerm = Math.floor(Math.random() * 8) + 3;
-                    
-                    // 計算第n項的值
-                    let answer = firstTerm + (nthTerm - 1) * commonDiff;
-                    
-                    // 確保答案在合理範圍內 (-100 到 100)
-                } while (Math.abs(firstTerm + (nthTerm - 1) * commonDiff) > 100);
-
-                // 生成前三項作為提示
-                let firstThreeTerms = [
-                    firstTerm,
-                    firstTerm + commonDiff,
-                    firstTerm + 2 * commonDiff
-                ].join(', ');
-
-                questions.push({
-                    question: `${i + 1}. 等差數列的前三項為 ${firstThreeTerms}，求第 ${nthTerm} 項 = `,
-                    answer: firstTerm + (nthTerm - 1) * commonDiff
-                });
-                break;
-            case 'arithmeticSum': // 等差數列求和
-                let firstTermSum, diffSum, numTerms;  // 改用不同的變數名稱
-                do {
-                    // 生成首項 (1-10)
-                    firstTermSum = Math.floor(Math.random() * 10) + 1;
-                    // 生成公差 (-5 到 5，但不包含0)
-                    diffSum = Math.floor(Math.random() * 10) - 5;
-                    if (diffSum === 0) diffSum = 1;
-                    // 生成項數 (3-8項)
-                    numTerms = Math.floor(Math.random() * 6) + 3;
-                    
-                    // 計算最後一項
-                    let lastTerm = firstTermSum + (numTerms - 1) * diffSum;
-                    // 計算總和
-                    let sequenceSum = (numTerms * (firstTermSum + lastTerm)) / 2;
-                    
-                    // 確保所有項和總和都在合理範圍內
-                } while (Math.abs(firstTermSum + (numTerms - 1) * diffSum) > 50 || 
-                         Math.abs((numTerms * (2 * firstTermSum + (numTerms - 1) * diffSum)) / 2) > 100);
-
-                // 生成前三項作為提示
-                let sumFirstThreeTerms = [
-                    firstTermSum,
-                    firstTermSum + diffSum,
-                    firstTermSum + 2 * diffSum
-                ].join(', ');
-
-                // 計算總和
-                let sequenceSum = (numTerms * (2 * firstTermSum + (numTerms - 1) * diffSum)) / 2;
-
-                questions.push({
-                    question: `${i + 1}. 等差數列的前三項為 ${sumFirstThreeTerms}，求前 ${numTerms} 項的和 = `,
-                    answer: sequenceSum
-                });
                 break;
         }
     }

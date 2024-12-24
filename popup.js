@@ -89,7 +89,7 @@ function generateQuestions(selectedType) {
                     });
                 } else {
                     // 如果行列式為零，則重新生成題目
-                    i--; // 重新生成這一題
+                    i--; // 重新���成這一題
                 }
                 break;
             case 'twoDigitAdd': // 2位數加法
@@ -206,7 +206,7 @@ function generateQuestions(selectedType) {
             case 'multipleOfSix': // 6的倍數判別
                 num1 = Math.floor(Math.random() * 9999); // 生成0到99的數字
                 questions.push({
-                    question: `${i + 1}. ${num1} 是 6 的倍數嗎？`,
+                    question: `${i + 1}. ${num1} 是 6 ���倍數嗎？`,
                     answer: (num1 % 6 === 0) ? "y" : "n"
                 });
                 break;
@@ -217,7 +217,7 @@ function generateQuestions(selectedType) {
                     answer: (num1 % 9 === 0) ? "y" : "n"
                 });
                 break;
-            case 'multipleOfEleven': // 11的倍數判別
+            case 'multipleOfEleven': // 11的倍數��別
                 num1 = Math.floor(Math.random() * 9999999); // 生成0到99的數字
                 questions.push({
                     question: `${i + 1}. ${num1} 是 11 的倍數嗎？`,
@@ -268,7 +268,7 @@ function generateQuestions(selectedType) {
                 num2 = Math.floor(Math.random() * (99999 - 10 + 1)) + 10; // 生成2位數到9位數的倍數
                 num1 = 9; // 因數
                 questions.push({
-                    question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎？`,
+                    question: `${i + 1}. ${num1} 是 ${num2} 的因數嗎��`,
                     answer: (num2 % num1 === 0) ? "y" : "n"
                 });
                 break;
@@ -299,20 +299,32 @@ function generateQuestions(selectedType) {
                 });
                 break;
             case 'fractionOperations': // 分數4則運算
-                // 隨機成分子和分母
-                let numerator1 = Math.floor(Math.random() * 10) + 1; // 生成1到10的分子
-                let denominator1 = Math.floor(Math.random() * 10) + 1; // 生成1到10的分母
-                let numerator2 = Math.floor(Math.random() * 10) + 1; // 生成1到10的分子
-                let denominator2 = Math.floor(Math.random() * 10) + 1; // 生成1到10的分母
+                // 隨機生成分子和分母
+                let numerator1, denominator1, numerator2, denominator2;
+                do {
+                    numerator1 = Math.floor(Math.random() * 9) + 2; // 生成2到10的分子
+                    denominator1 = Math.floor(Math.random() * 9) + 2; // 生成2到10的分母
+                    numerator2 = Math.floor(Math.random() * 9) + 2; // 生成2到10的分子
+                    denominator2 = Math.floor(Math.random() * 9) + 2; // 生成2到10的分母
+                    
+                    // 確保分子不等於分母（避免得到1）
+                } while (numerator1 === denominator1 || numerator2 === denominator2);
+
                 // 隨機選擇運算符
                 let fractionOperation = ['+', '-', '*', '/'][Math.floor(Math.random() * 4)];
                 let question, answer;
+                
                 switch (fractionOperation) {
                     case '+':
                         question = `${formatFraction(numerator1, denominator1)} + ${formatFraction(numerator2, denominator2)}`;
                         answer = `${(numerator1 * denominator2 + numerator2 * denominator1)}/${(denominator1 * denominator2)}`;
                         break;
                     case '-':
+                        // 確保減法結果為正數
+                        if ((numerator1 * denominator2) < (numerator2 * denominator1)) {
+                            [numerator1, numerator2] = [numerator2, numerator1];
+                            [denominator1, denominator2] = [denominator2, denominator1];
+                        }
                         question = `${formatFraction(numerator1, denominator1)} - ${formatFraction(numerator2, denominator2)}`;
                         answer = `${(numerator1 * denominator2 - numerator2 * denominator1)}/${(denominator1 * denominator2)}`;
                         break;
@@ -325,7 +337,7 @@ function generateQuestions(selectedType) {
                         answer = `${(numerator1 * denominator2)}/${(denominator1 * numerator2)}`;
                         break;
                 }
-            
+
                 questions.push({
                     question: `${i + 1}. ${question} = `,
                     answer: simplifyFraction(answer)
@@ -475,7 +487,7 @@ function generateQuestions(selectedType) {
             case 'sameBaseExponential': // 同底數指數四則運算
                 let sameBase, sameExpNums, samePoweredNums, sameExpOp;
                 do {
-                    // 生成一個底數（2-9）和兩個指數（2-9）
+                    // 生成一個底數（2-9）和���個指數（2-9）
                     sameBase = Math.floor(Math.random() * 8) + 2; // 2-9的底數
                     sameExpNums = Array(2).fill().map(() => Math.floor(Math.random() * 8) + 2); // 2-9的指數
                     sameExpOp = ['+', '-', '×', '÷'][Math.floor(Math.random() * 4)]; // 隨機選擇一個運算符
@@ -493,7 +505,7 @@ function generateQuestions(selectedType) {
                         case '÷': sameResult = samePoweredNums[0] / samePoweredNums[1]; break;
                     }
                     
-                    // 如果結果超過999或任何一個數超過999，重生成
+                    // 如果結果超過999或任何��個數超過999，重生成
                 } while (samePoweredNums[0] > 999 || samePoweredNums[1] > 999 || 
                         (sameExpOp === '×' && samePoweredNums[0] * samePoweredNums[1] > 999) ||
                         (sameExpOp === '+' && samePoweredNums[0] + samePoweredNums[1] > 999));
@@ -539,7 +551,7 @@ function generateQuestions(selectedType) {
                 
                 // 新增一個函數來找到最接近的指數表示
                 function findExponentialForm(number) {
-                    // 遍歷所有可能的底數（2-9）
+                    // 遍歷所有可能的���數（2-9）
                     for(let base = 2; base <= 9; base++) {
                         // 遍歷所有可能的指數（1-9）
                         for(let exp = 1; exp <= 9; exp++) {
@@ -811,6 +823,96 @@ function generateQuestions(selectedType) {
                     }
                     break;
                 } while (true);
+                break;
+            case 'threeTermExponential': // 三項指數四則運算
+                let term1, term2, term3, operator1, operator2, result;
+                do {
+                    // 生成三個指數運算式和兩個運算符
+                    term1 = generateExponentialTerm();
+                    term2 = generateExponentialTerm();
+                    term3 = generateExponentialTerm();
+                    operator1 = getRandomOperator();
+                    operator2 = getRandomOperator();
+
+                    // 計算結果
+                    result = calculateThreeTermResult(term1, term2, term3, operator1, operator2);
+                    
+                    // 確保結果在合理範圍內
+                } while (result > 999 || result < -999 || !Number.isInteger(result));
+
+                // 嘗試將結果轉換為指數形式
+                let expForm = findExponentialForm(result);
+                let formattedAnswer = expForm ? formatPower(expForm.base, expForm.exponent) : result;
+
+                // 格式化題目
+                questions.push({
+                    question: `${i + 1}. ${formatExponentialTerm(term1)} ${operator1} ${formatExponentialTerm(term2)} ${operator2} ${formatExponentialTerm(term3)} = `,
+                    answer: formattedAnswer
+                });
+                break;
+            case 'arithmeticSequence': // 等差數列求n項
+                let firstTerm, commonDiff, nthTerm;
+                do {
+                    // 生成首項 (1-20)
+                    firstTerm = Math.floor(Math.random() * 20) + 1;
+                    // 生成公差 (-10 到 10，但不包含0)
+                    commonDiff = Math.floor(Math.random() * 20) - 10;
+                    if (commonDiff === 0) commonDiff = 1;
+                    // 生成要求的項數 (第n項，範圍3-10)
+                    nthTerm = Math.floor(Math.random() * 8) + 3;
+                    
+                    // 計算第n項的值
+                    let answer = firstTerm + (nthTerm - 1) * commonDiff;
+                    
+                    // 確保答案在合理範圍內 (-100 到 100)
+                } while (Math.abs(firstTerm + (nthTerm - 1) * commonDiff) > 100);
+
+                // 生成前三項作為提示
+                let firstThreeTerms = [
+                    firstTerm,
+                    firstTerm + commonDiff,
+                    firstTerm + 2 * commonDiff
+                ].join(', ');
+
+                questions.push({
+                    question: `${i + 1}. 等差數列的前三項為 ${firstThreeTerms}，求第 ${nthTerm} 項 = `,
+                    answer: firstTerm + (nthTerm - 1) * commonDiff
+                });
+                break;
+            case 'arithmeticSum': // 等差數列求和
+                let firstTermSum, diffSum, numTerms;  // 改用不同的變數名稱
+                do {
+                    // 生成首項 (1-10)
+                    firstTermSum = Math.floor(Math.random() * 10) + 1;
+                    // 生成公差 (-5 到 5，但不包含0)
+                    diffSum = Math.floor(Math.random() * 10) - 5;
+                    if (diffSum === 0) diffSum = 1;
+                    // 生成項數 (3-8項)
+                    numTerms = Math.floor(Math.random() * 6) + 3;
+                    
+                    // 計算最後一項
+                    let lastTerm = firstTermSum + (numTerms - 1) * diffSum;
+                    // 計算總和
+                    let sequenceSum = (numTerms * (firstTermSum + lastTerm)) / 2;
+                    
+                    // 確保所有項和總和都在合理範圍內
+                } while (Math.abs(firstTermSum + (numTerms - 1) * diffSum) > 50 || 
+                         Math.abs((numTerms * (2 * firstTermSum + (numTerms - 1) * diffSum)) / 2) > 100);
+
+                // 生成前三項作為提示
+                let sumFirstThreeTerms = [
+                    firstTermSum,
+                    firstTermSum + diffSum,
+                    firstTermSum + 2 * diffSum
+                ].join(', ');
+
+                // 計算總和
+                let sequenceSum = (numTerms * (2 * firstTermSum + (numTerms - 1) * diffSum)) / 2;
+
+                questions.push({
+                    question: `${i + 1}. 等差數列的前三項為 ${sumFirstThreeTerms}，求前 ${numTerms} 項的和 = `,
+                    answer: sequenceSum
+                });
                 break;
         }
     }
@@ -1318,7 +1420,7 @@ function simplifyFraction(fraction) {
     return formatFraction(simplifiedNumerator, simplifiedDenominator);
 }
 
-// 添加格式化分數���函數
+// 添加格式化分數函數
 function formatFraction(numerator, denominator) {
     return `<div class="fraction"><span class="numerator">${numerator}</span><span class="denominator">${denominator}</span></div>`;
 }
@@ -1357,4 +1459,114 @@ function formatPrimeFactors(factors) {
     });
     
     return result.join(' × ');
+}
+
+// 監聽三項指數四則運算按鈕
+document.getElementById('threeTermExponential').addEventListener('click', function() {
+    const problems = generateThreeTermExponentialProblems(10); // 生成10道題目
+    displayProblems(problems);
+});
+
+// 生成三項指數四則運算題目
+function generateThreeTermExponentialProblems(count) {
+    const problems = [];
+    
+    for (let i = 0; i < count; i++) {
+        // 生成三個指數運算式和兩個運算符
+        const term1 = generateExponentialTerm();
+        const term2 = generateExponentialTerm();
+        const term3 = generateExponentialTerm();
+        const operator1 = getRandomOperator();
+        const operator2 = getRandomOperator();
+
+        // 計算結果
+        const result = calculateThreeTermResult(term1, term2, term3, operator1, operator2);
+
+        // 格式化題目和答案
+        const problem = `${formatExponentialTerm(term1)} ${operator1} ${formatExponentialTerm(term2)} ${operator2} ${formatExponentialTerm(term3)}`;
+        
+        problems.push({
+            problem: problem,
+            answer: result
+        });
+    }
+    
+    return problems;
+}
+
+// 生成單個指數運算式
+function generateExponentialTerm() {
+    const base = Math.floor(Math.random() * 8) + 2; // 2到9的底數
+    const exponent = Math.floor(Math.random() * 3) + 1; // 1到3的指數
+    return { base, exponent };
+}
+
+// 修改格式化指數運算式顯示函數
+function formatExponentialTerm(term) {
+    // 使用現有的 formatPower 函數來格式化指數
+    return formatPower(term.base, term.exponent);
+}
+
+// 隨機獲取運算符
+function getRandomOperator() {
+    const operators = ['+', '-', '×', '÷'];
+    return operators[Math.floor(Math.random() * operators.length)];
+}
+
+// 計算三項指數運算的結果
+function calculateThreeTermResult(term1, term2, term3, operator1, operator2) {
+    // 計算每個項的值
+    const value1 = Math.pow(term1.base, term1.exponent);
+    const value2 = Math.pow(term2.base, term2.exponent);
+    const value3 = Math.pow(term3.base, term3.exponent);
+    
+    // 根據運算符優先級計算結果
+    let intermediateResult;
+    let finalResult;
+    
+    if (operator1 === '×' || operator1 === '÷') {
+        // 先計算第一個運算符
+        intermediateResult = calculateTwoNumbers(value1, value2, operator1);
+        finalResult = calculateTwoNumbers(intermediateResult, value3, operator2);
+    } else if (operator2 === '×' || operator2 === '÷') {
+        // 先計算第二個運算符
+        intermediateResult = calculateTwoNumbers(value2, value3, operator2);
+        finalResult = calculateTwoNumbers(value1, intermediateResult, operator1);
+    } else {
+        // 從左到右依次計算
+        intermediateResult = calculateTwoNumbers(value1, value2, operator1);
+        finalResult = calculateTwoNumbers(intermediateResult, value3, operator2);
+    }
+    
+    return Math.round(finalResult * 100) / 100; // 四捨五入到小數點後兩位
+}
+
+// 計算兩個數字的運算結果
+function calculateTwoNumbers(num1, num2, operator) {
+    switch (operator) {
+        case '+': return num1 + num2;
+        case '-': return num1 - num2;
+        case '×': return num1 * num2;
+        case '÷': return num1 / num2;
+        default: return 0;
+    }
+}
+
+// 添加一個新的輔助函數來尋找數字的指數形式
+function findExponentialForm(number) {
+    if (number <= 1) return null;
+    
+    // 檢查2到9的底數
+    for (let base = 2; base <= 9; base++) {
+        // 檢查1到5的指數
+        for (let exp = 1; exp <= 5; exp++) {
+            if (Math.pow(base, exp) === Math.abs(number)) {
+                return {
+                    base: base,
+                    exponent: exp
+                };
+            }
+        }
+    }
+    return null;
 }

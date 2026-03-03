@@ -16,7 +16,7 @@ body{font-family:sans-serif;padding:20px;max-width:600px}
 <body>
 <h2>ESP32 MQTT Opening Test</h2>
 <div id="sb" class="disc">Loading...</div><br><br>
-<button id="openBtn" disabled onclick="sendOpen()">Open Door 3s</button>
+<button id="openBtn" disabled onclick="sendOpen()">Open Door 1s</button>
 <button onclick="doConnect()" style="margin-left:8px;padding:10px 14px;border-radius:6px;cursor:pointer">Reconnect</button>
 <div id="lg"></div>
 <script>
@@ -92,7 +92,7 @@ function doConnect(){
 }
 function sendOpen(){
   if(!client||!client.isConnected()){ log("Not connected","er"); return; }
-  var p={action:"open",duration:3000,ts:Math.floor(Date.now()/1000)};
+  var p={action:"open",duration:1000,ts:Math.floor(Date.now()/1000)};
   var m=new Paho.MQTT.Message(JSON.stringify(p));
   m.destinationName=topicCmd; m.qos=1;
   client.send(m);

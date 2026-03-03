@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>ESP32 MQTT 開門測試</title>
+
+<!-- 可靠 HTTPS CDN 版本 Paho -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
+
+<style>
+body { font-family: sans-serif; padding: 20px; }
+#console { 
+    white-space: pre-wrap; 
+    border:1px solid #ccc; 
+    padding:10px; 
+    margin-top:10px; 
+    height:200px; 
+    overflow-y:auto; 
+}
+button { font-size:16px; padding:8px 16px; }
+</style>
+</head>
+<body>
+
+<h2>ESP32 MQTT 開門測試</h2>
+<p>Status: <span id="status">Disconnected</span></p>
+<button id="openBtn" disabled>開門 3 秒</button>
+
+<div id="console"></div>
+
+<script>
+function log(msg){
+    console.log(msg);
+    const c = document.getElementById("console");
+    c.innerText += msg + "\n";
+    c.scrollTop = c.scrollHeight;
+}
+
+// ===== 設定 =====
+const clientId = "webClient_" + Math.floor(Math.random()*1000);
+const broker = "8141bbadc4214f9d9f30e7822bd41522.s1.eu.hivemq.cloud";
+const port = 8884;
+const path = "/mqtt";
+const user = "binn0428";  // 替換成 HiveMQ Cloud 帳號
+const pass = "1a2b3C4D";  // 替換成 HiveMQ Cloud 密碼
+const deviceId = "gate01";
+
+const topicCommand = `device/${deviceId}/command`;
+const topicStatus  = `device/${deviceId}/status`;
+
+// ===== 建立 MQTT client =====
+const client = new Paho.MQTT.Client(broker, port, path, clientId);
+
+// ===== 收到訊息 =====
+client.onMessageArrived = function(message){
+    log("Received: " + message.destinationName + " => " + message.payloadString);
+    document.getElementById("status").innerText = message.payloadString;
+}
+
+// ===== 連線斷線 =====
+client.onConnectionLost = function(responseObject){
+    log("Connection lost: " + (responseObject.errorMessage||"unknown"));
+    document.getElementById("status").innerText = "Disconnected";
+    document.getElementById("openBtn").disabled = true;
+}
+
+// ===== 連線 =====
+log("Connecting to broker...");
+client.connect({
+    useSSL: true,
+    userName: user,
+    password: pass,
+    timeout: 10,
+    keepAliveInterval: 60,
+    onSuccess: function(){
+        log("✅ Connected!");
+        document.getElementById("status").innerText = "Connected";
+        document.getElementById("openBtn").disabled = false;
+        client.subscribe(topicStatus);
+    },
+    onFailure: function(err){
+        log("❌ Connect failed!");
+        log("Error: " + JSON.stringify(err));
+        document.getElementById("status").innerText = "Connect failed";
+    }
+});
+
+// ===== 開門按鈕 =====
+document.getElementById("openBtn").addEventListener("click", ()=>{
+    const payload = {
+        action: "open",
+        duration: 3000,
+        ts: Math.floor(Date.now()/1000)  // 自動生成 ts
+    };
+    const msg = new Paho.MQTT.Message(JSON.stringify(payload));
+    msg.destinationName = topicCommand;
+    client.send(msg);
+    log("Sent: " + JSON.stringify(payload));
+});
+</script>
+
+</body>
+</html>

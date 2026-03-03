@@ -2,102 +2,103 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<title>ESP32 MQTT 開門測試</title>
-
-<!-- 可靠 HTTPS CDN 版本 Paho -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/mqttws31.min.js"></script>
-
+<title>ESP32 MQTT</title>
 <style>
-body { font-family: sans-serif; padding: 20px; }
-#console { 
-    white-space: pre-wrap; 
-    border:1px solid #ccc; 
-    padding:10px; 
-    margin-top:10px; 
-    height:200px; 
-    overflow-y:auto; 
-}
-button { font-size:16px; padding:8px 16px; }
+body{font-family:sans-serif;padding:20px;max-width:600px}
+#sb{padding:8px 14px;border-radius:6px;display:inline-block;font-weight:bold;margin-bottom:12px}
+.conn{background:#d4edda;color:#155724}.disc{background:#f8d7da;color:#721c24}.ing{background:#fff3cd;color:#856404}
+#openBtn{font-size:18px;padding:10px 24px;background:#28a745;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-bottom:12px}
+#openBtn:disabled{background:#aaa;cursor:not-allowed}
+#lg{white-space:pre-wrap;border:1px solid #ccc;padding:10px;height:240px;overflow-y:auto;font-size:13px;background:#1e1e1e;color:#d4d4d4;border-radius:6px}
+.ok{color:#4ec9}.er{color:#f66}.rx{color:#5bf}.dim{color:#888}
 </style>
 </head>
 <body>
-
-<h2>ESP32 MQTT 開門測試</h2>
-<p>Status: <span id="status">Disconnected</span></p>
-<button id="openBtn" disabled>開門 3 秒</button>
-
-<div id="console"></div>
-
+<h2>ESP32 MQTT Opening Test</h2>
+<div id="sb" class="disc">Loading...</div><br><br>
+<button id="openBtn" disabled onclick="sendOpen()">Open Door 3s</button>
+<button onclick="doConnect()" style="margin-left:8px;padding:10px 14px;border-radius:6px;cursor:pointer">Reconnect</button>
+<div id="lg"></div>
 <script>
-function log(msg){
-    console.log(msg);
-    const c = document.getElementById("console");
-    c.innerText += msg + "\n";
-    c.scrollTop = c.scrollHeight;
+var CONFIG = {
+  broker:   "8141bbadc4214f9d9f30e7822bd41522.s1.eu.hivemq.cloud",
+  port:     8884,
+  path:     "/mqtt",
+  user:     "binn0428",
+  pass:     "1a2b3C4D",
+  deviceId: "gate01"
+};
+var topicCmd = "device/" + CONFIG.deviceId + "/command";
+var topicSts = "device/" + CONFIG.deviceId + "/status";
+var client = null, reconnTimer = null;
+function ts(){ return new Date().toTimeString().slice(0,8); }
+function log(msg, cls){
+  var c=document.getElementById("lg");
+  var s=document.createElement("span");
+  s.className=cls||""; s.textContent="["+ts()+"] "+msg+"\n";
+  c.appendChild(s); c.scrollTop=c.scrollHeight;
 }
-
-// ===== 設定 =====
-const clientId = "webClient_" + Math.floor(Math.random()*1000);
-const broker = "8141bbadc4214f9d9f30e7822bd41522.s1.eu.hivemq.cloud";
-const port = 8884;
-const path = "/mqtt";
-const user = "binn0428";  // 替換成 HiveMQ Cloud 帳號
-const pass = "1a2b3C4D";  // 替換成 HiveMQ Cloud 密碼
-const deviceId = "gate01";
-
-const topicCommand = `device/${deviceId}/command`;
-const topicStatus  = `device/${deviceId}/status`;
-
-// ===== 建立 MQTT client =====
-const client = new Paho.MQTT.Client(broker, port, path, clientId);
-
-// ===== 收到訊息 =====
-client.onMessageArrived = function(message){
-    log("Received: " + message.destinationName + " => " + message.payloadString);
-    document.getElementById("status").innerText = message.payloadString;
+function setSt(txt,cls){ var e=document.getElementById("sb"); e.textContent=txt; e.className=cls; }
+var CDNS=[
+  "https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js",
+  "https://unpkg.com/paho-mqtt@1.0.4/src/mqttws31.js",
+  "https://cdn.jsdelivr.net/npm/paho-mqtt@1.0.4/src/mqttws31.js"
+];
+var cdnIdx=0;
+function loadNext(){
+  if(cdnIdx>=CDNS.length){ log("All CDNs failed","er"); setSt("Paho load failed","disc"); return; }
+  var url=CDNS[cdnIdx++];
+  log("Loading Paho: "+url,"dim");
+  var s=document.createElement("script"); s.src=url;
+  s.onload=function(){ if(typeof Paho!=="undefined"){ log("Paho OK","ok"); doConnect(); } else { log("Paho undefined, trying next","er"); loadNext(); } };
+  s.onerror=function(){ log("CDN failed: "+url,"er"); loadNext(); };
+  document.head.appendChild(s);
 }
-
-// ===== 連線斷線 =====
-client.onConnectionLost = function(responseObject){
-    log("Connection lost: " + (responseObject.errorMessage||"unknown"));
-    document.getElementById("status").innerText = "Disconnected";
-    document.getElementById("openBtn").disabled = true;
-}
-
-// ===== 連線 =====
-log("Connecting to broker...");
-client.connect({
-    useSSL: true,
-    userName: user,
-    password: pass,
-    timeout: 10,
-    keepAliveInterval: 60,
-    onSuccess: function(){
-        log("✅ Connected!");
-        document.getElementById("status").innerText = "Connected";
-        document.getElementById("openBtn").disabled = false;
-        client.subscribe(topicStatus);
+function doConnect(){
+  if(typeof Paho==="undefined"){ log("Paho not loaded","er"); return; }
+  if(client){ try{ client.disconnect(); }catch(e){} client=null; }
+  if(reconnTimer){ clearTimeout(reconnTimer); reconnTimer=null; }
+  var cid="web_"+Math.random().toString(36).slice(2,9);
+  log("Connecting "+CONFIG.broker+":"+CONFIG.port+" id="+cid,"dim");
+  setSt("Connecting...","ing");
+  client=new Paho.MQTT.Client(CONFIG.broker, Number(CONFIG.port), CONFIG.path, cid);
+  client.onMessageArrived=function(m){ log("Recv ["+m.destinationName+"] "+m.payloadString,"rx"); };
+  client.onConnectionLost=function(r){
+    log("Lost: "+(r.errorMessage||"unknown"),"er");
+    setSt("Disconnected","disc");
+    document.getElementById("openBtn").disabled=true;
+    reconnTimer=setTimeout(doConnect,10000);
+    log("Auto reconnect in 10s","dim");
+  };
+  client.connect({
+    useSSL:true, userName:CONFIG.user, password:CONFIG.pass,
+    timeout:15, keepAliveInterval:30, cleanSession:true,
+    onSuccess:function(){
+      log("Connected!","ok"); setSt("Connected","conn");
+      document.getElementById("openBtn").disabled=false;
+      client.subscribe(topicSts,{
+        onSuccess:function(){ log("Subscribed "+topicSts,"ok"); },
+        onFailure:function(e){ log("Subscribe failed "+JSON.stringify(e),"er"); }
+      });
     },
-    onFailure: function(err){
-        log("❌ Connect failed!");
-        log("Error: " + JSON.stringify(err));
-        document.getElementById("status").innerText = "Connect failed";
+    onFailure:function(err){
+      var r=err.errorMessage||JSON.stringify(err);
+      log("Connect failed code="+err.errorCode+" "+r,"er");
+      var h={4:"Wrong user/pass",5:"Not authorized",7:"Wrong user/pass",8:"Broker rejected"};
+      if(h[err.errorCode]) log("Hint: "+h[err.errorCode],"er");
+      setSt("Connect Failed","disc");
     }
-});
-
-// ===== 開門按鈕 =====
-document.getElementById("openBtn").addEventListener("click", ()=>{
-    const payload = {
-        action: "open",
-        duration: 3000,
-        ts: Math.floor(Date.now()/1000)  // 自動生成 ts
-    };
-    const msg = new Paho.MQTT.Message(JSON.stringify(payload));
-    msg.destinationName = topicCommand;
-    client.send(msg);
-    log("Sent: " + JSON.stringify(payload));
-});
+  });
+}
+function sendOpen(){
+  if(!client||!client.isConnected()){ log("Not connected","er"); return; }
+  var p={action:"open",duration:3000,ts:Math.floor(Date.now()/1000)};
+  var m=new Paho.MQTT.Message(JSON.stringify(p));
+  m.destinationName=topicCmd; m.qos=1;
+  client.send(m);
+  log("Sent "+JSON.stringify(p),"ok");
+}
+loadNext();
 </script>
-
 </body>
 </html>
